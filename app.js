@@ -3,10 +3,10 @@ const bot = new Discord.Client();
 
 bot.on("ready", () => {    
   				// join the correct voice channel 
-//  let vChannel = bot.channels.get(process.env.VCHANNEL);  
-//   vChannel.join()
-//   		.then(connection => console.log('Connected'))
-//  		.catch(console.error);  		
+  let vChannel = bot.channels.get(process.env.VCHANNEL);  
+   vChannel.join()
+   		.then(connection => console.log('Connected'))
+  		.catch(console.error);  		
   				//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 });
 
