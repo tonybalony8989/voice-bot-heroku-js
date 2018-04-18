@@ -63,7 +63,7 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
   }		
 });
 bot.on("message", async message => {
-  //try triggering on a different event and using client.voiceConnections property https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=voiceConnections
+  			//try triggering on a different event and using client.voiceConnections property https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=voiceConnections
 //  if(message.author.bot) return;
 //  if(message.content.indexOf("z join fleet voice please") !== 0) return;
    
@@ -73,7 +73,7 @@ bot.on("message", async message => {
 //   vChannel.join()
 //   		.then(connection => console.log('Connected - manual. User ID= '+message.author.id))
 //  		.catch(console.error);   
-  	 }
+//  	 }
 });
 
 bot.login(process.env.TOKEN);
