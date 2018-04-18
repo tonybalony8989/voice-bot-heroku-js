@@ -65,15 +65,15 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
 bot.on("message", async message => {
   
   if(message.author.bot) return;
-  if(message.content.indexOf("z join fleet voice please") !== 0) return;
+//  if(message.content.indexOf("z join fleet voice please") !== 0) return;
    
-  if(message.content === "z join fleet voice please") {
+//  if(message.content === "z join fleet voice please") {
   	// join the correct voice channel 
-  let vChannel = bot.channels.get(process.env.VCHANNEL);  
-   vChannel.join()
-   		.then(connection => console.log('Connected - manual. User ID= '+message.author.id))
-  		.catch(console.error);   
-  	 }
+//  let vChannel = bot.channels.get(process.env.VCHANNEL);  
+//   vChannel.join()
+//   		.then(connection => console.log('Connected - manual. User ID= '+message.author.id))
+//  		.catch(console.error);   
+//  	 }
 });
 
 bot.login(process.env.TOKEN);
