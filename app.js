@@ -13,7 +13,6 @@ bot.on("ready", () => {
 bot.on("guildMemberSpeaking", (member, bool) => { 
 	if (bool) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);
-	  // hChannel.send('```css\n '+member.displayName+'```');
 var d = new Date();
 var year=String(d.getUTCFullYear());
 var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
@@ -25,7 +24,7 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
 		//hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+member.displayName+' 				`'+member.user.username+'#'+member.user.discriminator+'` ');
 		hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+member.displayName+' 				`'+member.user.id+'` ');
 //hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+member.displayName+' ');
-	//hChannel.send(' '+member.displayName+'  ');		
+	
 	}  
 });
 
