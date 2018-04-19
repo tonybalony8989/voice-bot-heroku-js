@@ -70,7 +70,7 @@ bot.on("message", async message => {
   //let guildinfo=message.guild.id;
   //	guildinfo.catch(undefined);	
   //if(guildinfo===undefined) return;
-	console.log(message.type);
+	console.log(message.member);
   		
   if(message.content === "z join fleet voice please") {
   	// join the correct voice channel 
