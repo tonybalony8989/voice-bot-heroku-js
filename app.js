@@ -31,7 +31,10 @@ bot.on("voiceStateUpdate", (oldMember, newMember) =>{
   let oldUserChannel = oldMember.voiceChannel
   let vlChannel = bot.channels.get(process.env.VLCHANNEL);
   let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
-
+  let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
+//	 console.log(newMember.roles.last().name);
+	
+	
 var d = new Date();
 var year=String(d.getUTCFullYear());
 var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
@@ -44,8 +47,10 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
   	//vlChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+newMember.displayName+'`'+newMember.user.username+'#'+newMember.user.discriminator+'` ***JOINED*** _'+newUserChannel.name+'_');
 	vlChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+newMember.displayName+'`'+newMember.user.id+'` ***JOINED*** _'+newUserChannel.name+'_');
   	ttsChannel.send(newMember.displayName+' JOINED '+newUserChannel.name.replace(/\s/g, '')+'', { tts: true});
-	  
-	 console.log(newMember.roles.last().name);
+  	if (newMember.roles.last().name) === "@everyone" {
+		trackChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+newMember.displayName+'`'+newMember.user.id+'` ***JOINED*** _'+newUserChannel.name+'_');
+  	}
+
 	
   }
   else {
