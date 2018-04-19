@@ -8,6 +8,7 @@ bot.on("ready", () => {
    		.then(connection => console.log('Connected'))
   		.catch(console.error);  		
   				//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
+	bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
 });
 
 bot.on("guildMemberSpeaking", (member, bool) => { 
@@ -81,7 +82,7 @@ bot.on('disconnect', function(msg, code) {
     bot.connect();
 });
 
-//bot.voiceConnections.get(process.env.guild).on('disconnect', () => { 
+//bot.voiceConnections.get(process.env.GUILD).on('disconnect', () => { 
 //  let vChannel = bot.channels.get(process.env.VCHANNEL);  
 //   vChannel.join()
 //   		.then(connection => console.log('Connected - voice was disconnected'))
