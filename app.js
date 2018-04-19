@@ -80,5 +80,13 @@ bot.on('disconnect', function(msg, code) {
 	console.log('disconnect - reconnect attempt');
     bot.connect();
 });
+bot.voiceConnections.get(process.env.guild).on("disconnect", () => { 
+  let vChannel = bot.channels.get(process.env.VCHANNEL);  
+   vChannel.join()
+   		.then(connection => console.log('Connected - manual. User ID= '+message.author.id))
+  		.catch(console.error);  
+});
+						  
+
+
 bot.login(process.env.TOKEN);
-//bot.login(config.token);
