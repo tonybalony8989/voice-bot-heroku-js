@@ -69,6 +69,7 @@ bot.on("message", async message => {
 	//only accept commands from within a guild (not DM or groupDM)
   let guildinfo=message.guild;
   if(guildinfo===undefined) return;
+	console.log(message.guild.id);
   		
   if(message.content === "z join fleet voice please") {
   	// join the correct voice channel 
