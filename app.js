@@ -75,6 +75,10 @@ bot.on("message", async message => {
 //  		.catch(console.error);   
 //  	 }
 });
-
+bot.on('disconnect', function(msg, code) {
+    if (code === 0) return console.error(msg);
+	console.log('disconnect - reconnect attempt');
+    bot.connect();
+});
 bot.login(process.env.TOKEN);
 //bot.login(config.token);
