@@ -81,7 +81,12 @@ bot.on('disconnect', function(msg, code) {
     bot.connect();
 });
 
-						  
+bot.voiceConnections.get(process.env.guild).on('disconnect', () => { 
+  let vChannel = bot.channels.get(process.env.VCHANNEL);  
+   vChannel.join()
+   		.then(connection => console.log('Connected - voice was disconnected'))
+  		.catch(console.error);  
+});			  
 
 
 bot.login(process.env.TOKEN);
