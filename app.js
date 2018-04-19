@@ -66,9 +66,10 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
 bot.on("message", async message => {
   			//try triggering on a different event and using client.voiceConnections property https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=voiceConnections
   if(message.author.bot) return;
-  //if(message.channel.id !== undefined) return;
-  if(message.channel.guild.id === undefined) return;
-   
+	//only accept commands from within a guild (not DM or groupDM)
+  let guildinfo=message.guild;
+  if(guildinfo===undefined) return;
+  		
   if(message.content === "z join fleet voice please") {
   	// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
