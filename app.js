@@ -45,7 +45,7 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
 	vlChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+newMember.displayName+'`'+newMember.user.id+'` ***JOINED*** _'+newUserChannel.name+'_');
   	ttsChannel.send(newMember.displayName+' JOINED '+newUserChannel.name.replace(/\s/g, '')+'', { tts: true});
 	  
-	 console.log(newMember.roles.last().get('name');
+	 console.log(newMember.roles.last().name);
 	
   }
   else {
