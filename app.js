@@ -65,6 +65,7 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
 				vlChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+oldMember.displayName+'`'+oldMember.user.id+'` ***SWITCHED*** _'+oldUserChannel.name+'_ to _'+newUserChannel.name+'_');
 				ttsChannel.send(oldMember.displayName+' SWITCHED '+oldUserChannel.name.replace(/\s/g, '')+' to '+newUserChannel.name.replace(/\s/g, '')+'', { tts: true});
 				//str = str.replace(/\s/g, '');
+				//something something
 				}
 			}
   }		
