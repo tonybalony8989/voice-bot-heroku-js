@@ -81,11 +81,14 @@ bot.on("message", async message => {
   	// join the correct voice channel 
 	  
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
-   vChannel.leave();  
-	  setTimeout(function() {console.log('Wait 5 seconds');}, 5000);
-   vChannel.join()
+   vChannel.leave(); 
+   console.log('Left channel - Wait 5 seconds');
+	  setTimeout(function() {
+	vChannel.join()
    		.then(connection => console.log('Connected - manual. User ID= '+message.author.id))
   		.catch(console.error);   
+	  }, 5000);
+   
   	 }
 });
 bot.on('disconnect', function(msg, code) {
