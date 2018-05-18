@@ -77,9 +77,14 @@ bot.on("message", async message => {
   if(message.member===null) return;
 	//console.log(message.member);
   		
-  if(message.content === "z join fleet voice please") {
+  if((message.content === "z join fleet voice please") && ((message.member.roles.last().name) !== "@everyone") ){
   	// join the correct voice channel 
+	  
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
+   vChannel.leave()
+   		.then(connection => console.log('Left - manual. User ID= '+message.author.id))
+  		.catch(console.error);	  
+	  setTimeout(function() {console.log('Wait 5 seconds');}, 5000);
    vChannel.join()
    		.then(connection => console.log('Connected - manual. User ID= '+message.author.id))
   		.catch(console.error);   
