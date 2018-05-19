@@ -85,7 +85,7 @@ bot.on("message", async message => {
    console.log('Left channel - Wait 5 seconds');
 	  setTimeout(function() {
 	vChannel.join()
-   		.then(connection => console.log('Connected - manual. User ID= '+message.author.id))
+   		.then(connection => console.log('Connected - manual. '+message.author.username+' User ID= '+message.author.id))
   		.catch(console.error);   
 	  }, 5000);
    
