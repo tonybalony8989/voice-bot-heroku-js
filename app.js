@@ -23,7 +23,7 @@ var min=String("0"+d.getUTCMinutes()).slice(-2);
 var sec=String("0"+d.getUTCSeconds()).slice(-2);
 //[11:22:33]
 	
-		hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+member.displayName+' 				`'+member.user.id+'` ***SPEAKING***');	}  
+		hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  **'+member.displayName+'** 				`'+member.user.id+'` ***SPEAKING***');	}  
 });
 
 bot.on("voiceStateUpdate", (oldMember, newMember) =>{
