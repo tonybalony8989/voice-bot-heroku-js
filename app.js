@@ -9,6 +9,9 @@ bot.on("ready", () => {
    		.then(async function(connection) {
 		        connection.on('speaking', (user, speaking) => {
 				console.log("Speaking")
+				if (!speaking){
+                return
+				}
 				})		
 		})		
 	//.then(connection => console.log('Connected'))
