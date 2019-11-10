@@ -8,7 +8,8 @@ bot.on("ready", () => {
    		.then(connection => {console.log('Connected'); 
 				const receiver = connection.createReceiver();
 				receiver.on('opus', function(user, data) {
-     						console.log("its working");})
+     						console.log('its working');})
+				     console.log('blah');
   		})
   		.catch(console.error);  		
   				//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
