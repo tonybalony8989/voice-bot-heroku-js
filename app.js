@@ -6,6 +6,7 @@ bot.on("ready", () => {
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
    		.then(connection => {console.log('Connected'); 
+				const receiver = connection.createReceiver();
 				receiver.on('opus', function(user, data) {
      						console.log("its working");})
   		})
