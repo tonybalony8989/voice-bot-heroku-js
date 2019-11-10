@@ -6,11 +6,7 @@ bot.on("ready", () => {
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
    		.then(connection => {console.log('Connected'); 
-				const receiver = connection.createReceiver();
-				receiver.on('opus', function(user, data) {
-     						console.log('its working');})
-				     console.log('blah');
-  		})
+			  		})
   		.catch(console.error);  		
   				//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
