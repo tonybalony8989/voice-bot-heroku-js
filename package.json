@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/",
   "dependencies": {
-    "discord.js": "tonybalony8989/discord.js#master",
+    "discord.js": "*",
     "discord.js-arbitrary-ffmpeg": ">=1.0.0",
     "ffmpeg": ">=0.0.4"
   }
