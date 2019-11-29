@@ -6,7 +6,7 @@ bot.on("ready", async (oldMember, newMember) => {
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
   const connection = await vChannel.join()
      	.catch(console.error)  
-	.then(const connection => console.log('Connected'))	
+	.then(connection => console.log('Connected'))	
 	
   connection.on('speaking', (user, speaking) => {
     if (speaking) {
