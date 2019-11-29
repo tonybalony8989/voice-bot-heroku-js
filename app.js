@@ -6,14 +6,16 @@ bot.on("ready", () => {
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  
- 		.then(async function(connection) {
-		        connection.on('speaking', (user, speaking) => {
-				console.log("Speaking")
-				if (!speaking){ 
-					return
-					}
-				})		
-		})		
+	.then(connection => console.log('Connected'))	
+	
+  const connection = await vChannel.voiceChannel.join()
+  connection.on('speaking', (user, speaking) => {
+    if (speaking) {
+      console.log(`I'm listening to ${user.username}`)
+    } else {
+      console.log(`I stopped listening to ${user.username}`)
+    }
+  })
 //	.then(connection => console.log('Connected'))	
   	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
