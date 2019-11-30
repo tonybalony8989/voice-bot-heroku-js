@@ -20,7 +20,7 @@ bot.on('ready', () => {      				// join the correct voice channel
 	//					////username doesn't give the displayName within the guild
 	//				// } 
 	//			 })		
-		 })	
+	//	 })	
   	
 });
 
