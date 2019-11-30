@@ -34,7 +34,15 @@ var sec=String("0"+d.getUTCSeconds()).slice(-2);
 	
 		hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+member.displayName+' 				`'+member.user.id+'` ');	}  
 });
-
+bot.on("voiceStateUpdate", (oldMember, newMember) =>{
+  
+  let newUserChannel = newMember.voiceChannel
+  let oldUserChannel = oldMember.voiceChannel
+  if (newMember===undefined) {return}
+  else {
+  console.log(newMember.displayName);	 }
+	
+});
 
 bot.on("message", async message => {
   			//try triggering on a different event and using client.voiceConnections property https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=voiceConnections
