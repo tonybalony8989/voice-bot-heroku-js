@@ -25,7 +25,7 @@
   },
   "homepage": "https://github.com/",
   "dependencies": {
-    "discord.js": "discordjs/discord.js#master", 
+    "discord.js": "tonybalony8989/discord.js#master", 
     "opusscript": "0.0.7",
     "ffmpeg": ">=0.0.4"
   }
