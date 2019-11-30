@@ -44,7 +44,7 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
 	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
   	ttsChannel.send(newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
-		 	if ((newState.member.roles.highest.name) === "Moderator3") {
+		 	if ((newState.member.roles.highest.name) == "Moderator3") {
 				trackChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 		 	}		
   }
