@@ -10,7 +10,9 @@ bot.on("ready", () => {
  		.then(async function(connection) {
 		        connection.on('speaking', (user, speaking) => {				
 				console.log(`${user.username} Speaking`)
-				if (!speaking){ return }				
+				if (!speaking){ 
+					return
+					}				
 				})		
 		})		
 		//.then(connection => console.log('Connected'))	
@@ -38,7 +40,7 @@ bot.on("voiceStateUpdate", (oldMember, newMember) =>{
   let oldUserChannel = oldMember.voiceChannel
   //if (newUserChannel === undefined) {return}
   //else {  console.log(newMember.displayName);	 }	
-  console.log(`${newMember.displayName} ${oldMember.displayName});
+  console.log(`${newMember.displayName} ${oldMember.displayName}`);
 });
 
 bot.on("message", async message => {
