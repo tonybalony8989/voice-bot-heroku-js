@@ -39,7 +39,7 @@ bot.on("voiceStateUpdate", (oldMember, newMember) =>{
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
   if (newUserChannel === undefined) {return}
-  else {  console.log(newMember.displayName)	 }	
+  else {  console.log(newMember.displayName);	 }	
 });
 
 bot.on("message", async message => {
