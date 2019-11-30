@@ -23,11 +23,12 @@ bot.on("ready", () => {      				// join the correct voice channel
 });
 
 bot.on("guildMemberSpeaking", (member, speaking) => { 
-	console.log(`${member.displayName} ${speaking.has(1)}`);
-	if (speaking.has(1)) {
-	let hChannel = bot.channels.get(process.env.TCHANNEL);	
-	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
-	}  
+	console.log("speaking");
+//	console.log(`${member.displayName} ${speaking.has(1)}`);
+//	if (speaking.has(1)) {
+//	let hChannel = bot.channels.get(process.env.TCHANNEL);	
+//	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
+//	}  
 });
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
