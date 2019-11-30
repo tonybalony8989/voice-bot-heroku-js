@@ -21,7 +21,7 @@ bot.on("guildMemberSpeaking", (member, speaking) => {
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
 	//crash here on user d/c
-  console.log(`${oldState} ${newState}`}
+  console.log(`${oldState.channel} ${newState.channel}`});
 });
 bot.on("message", async message => {
   			//try triggering on a different event and using client.voiceConnections property https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=voiceConnections
