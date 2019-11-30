@@ -27,12 +27,12 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
   let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	
-  if (newState.channel !== null) { console.log("A");
+  if (oldState.channel !== null) { console.log("A");
 	let newUserChannel = newState.channel.name;
 	let newName = newState.member.displayName;
 	let newID = newState.member.id;
   }
-  if (oldState.channel !== null) { console.log("B");
+  if (newState.channel !== null) { console.log("B");
 	let oldUserChannel = oldState.channel.name;
 	let oldName = oldState.member.displayName;
 	let oldID = oldState.member.id;    
