@@ -12,16 +12,14 @@ bot.on("ready", () => {      				// join the correct voice channel
 
 bot.on("guildMemberSpeaking", (member, bool) => { 
 	if (bool) {
-	let hChannel = bot.channels.get(process.env.TCHANNEL);
-	console.log(bool);
-	hChannel.send(Botdatestring()+member.displayName+' 				`'+member.user.id+'` ');	}  
+	let hChannel = bot.channels.get(process.env.TCHANNEL);	
+	hChannel.send(Botdatestring()+member.displayName+' 				`'+member.user.id+'` ');	
+	}  
 });
 
 bot.on("voiceStateUpdate", (oldMember, newMember) =>{
   
-  let newUserChannel = newMember.voiceChannel
-  let oldUserChannel = oldMember.voiceChannel	
-  console.log(`${newMember.displayName} ${oldMember.displayName}`);
+  console.log(`${newMember.voiceChannel} ${oldMember.voiceChannel}`);
 });
 
 bot.on("message", async message => {
