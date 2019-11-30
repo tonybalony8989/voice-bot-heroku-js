@@ -27,21 +27,18 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
   let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	
-  if (newState.channel !== null) {
+  if (newState.channel !== null) { console.log("A");
 	let newUserChannel = newState.channel.name;
 	let newName = newState.member.displayName;
 	let newID = newState.member.id;
   }
-  if (oldState.channel !== null) {
+  if (oldState.channel !== null) { console.log("B");
 	let oldUserChannel = oldState.channel.name;
 	let oldName = oldState.member.displayName;
 	let oldID = oldState.member.id;    
   }
 	
   if (oldState.channel === null) {  	//user joined channel  	
-	let newUserChannel = newState.channel.name;
-	let newName = newState.member.displayName;
-	let newID = newState.member.id;
 	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
   	ttsChannel.send(newMember.newName+' JOINED '+newUserChannel.name.replace(/\s/g, '')+'', { tts: true});
