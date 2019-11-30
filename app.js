@@ -8,11 +8,12 @@ bot.on("ready", () => {      				// join the correct voice channel
      	.catch(console.error)  	
 	 .then(async function(connection) {
 		         connection.on('speaking', (user, speaking) => {
-					console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
-					 if (speaking.has(1)) {
-						 let hChannel = bot.channels.get(process.env.TCHANNEL);	
-						 hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
-						//username doesn't give the displayName within the guild
+				 console.log("speaking async");
+					//console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
+					// if (speaking.has(1)) {
+						// let hChannel = bot.channels.get(process.env.TCHANNEL);	
+						// hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
+						////username doesn't give the displayName within the guild
 					 } 
 				 })		
 		 })		
