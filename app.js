@@ -5,25 +5,24 @@ const bot = new Discord.Client();
 bot.on("ready", () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
-     	.catch(console.error)  
-	.then(connection => console.log('Connected'))
-	// .then(async function(connection) {
-		        // connection.on('speaking', (user, speaking) => {
-				//	console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
-					// if (speaking.has(1)) {
-						// let hChannel = bot.channels.get(process.env.TCHANNEL);	
-						// hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
-						////username doesn't give the displayName within the guild
-					// } 
-				// })		
-		// })		
-
+     	.catch(console.error)  	
+	 .then(async function(connection) {
+		         connection.on('speaking', (user, speaking) => {
+					console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
+					 if (speaking.has(1)) {
+						 let hChannel = bot.channels.get(process.env.TCHANNEL);	
+						 hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
+						//username doesn't give the displayName within the guild
+					 } 
+				 })		
+		 })		
+//.then(connection => console.log('Connected'))
   	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 	//add node-opus build pack https://github.com/codeinteger6/heroku-buildpack-libopus or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
 });
 
 bot.on("guildMemberSpeaking", (member, speaking) => { 
-	console.log("speaking");
+	console.log("speaking")
 //	console.log(`${member.displayName} ${speaking.has(1)}`);
 //	if (speaking.has(1)) {
 //	let hChannel = bot.channels.get(process.env.TCHANNEL);	
