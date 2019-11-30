@@ -26,7 +26,9 @@
   "homepage": "https://github.com/",
   "dependencies": {
     "discord.js": "tonybalony8989/discord.js", 
-    "node-opus": ">=0.3.3",
+    "ffmpeg-binaries": "^4.0.0",
+    "node-opus": "^0.2.7",
+    "opusscript": "0.0.7",
     "ffmpeg": ">=0.0.4"
   }
 }
