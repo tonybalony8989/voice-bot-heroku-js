@@ -4,7 +4,7 @@
   "description": "A Discord bot",
   "main": "app.js",
   "engines": {
-    "node": ">=10.2",
+    "node": "10.2.0",
     "npm": "*"
   },
   "scripts": {
@@ -26,7 +26,7 @@
   "homepage": "https://github.com/",
   "dependencies": {
     "discord.js": "tonybalony8989/discord.js", 
-    "node-opus": "0.3",
+    "node-opus": ">=0.3.3",
     "ffmpeg": ">=0.0.4"
   }
 }
