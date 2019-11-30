@@ -1,37 +1,38 @@
-const Discord = require("discord.js");
+const Discord = require('discord.js');
 const bot = new Discord.Client();
-
-
-bot.on("ready", () => {      				// join the correct voice channel 
+//https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
+//	https://elements.heroku.com/buildpacks/dubsmash/heroku-buildpack-opus 
+//* https://github.com/jayzes/heroku-buildpack-ffmpeg
+//* https://github.com/codeinteger6/heroku-buildpack-libopus 
+//or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
+bot.on('ready', () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  	
-	 .then(async function(connection) {
-		         connection.on('speaking', (user, speaking) => {
-				 console.log("speaking async");
-					//console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
-					// if (speaking.has(1)) {
-						// let hChannel = bot.channels.get(process.env.TCHANNEL);	
-						// hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
-						////username doesn't give the displayName within the guild
-					// } 
-				 })		
-		 })		
-//.then(connection => console.log('Connected'))
-  	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
-	//add node-opus build pack https://github.com/codeinteger6/heroku-buildpack-libopus or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
+	.then(connection => console.log('Connected'))
+	// .then(async function(connection) {
+	//	         connection.on('speaking', (user, speaking) => {
+	//			 console.log("speaking async");
+	//				//console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
+	//				// if (speaking.has(1)) {
+	//					// let hChannel = bot.channels.get(process.env.TCHANNEL);	
+	//					// hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
+	//					////username doesn't give the displayName within the guild
+	//				// } 
+	//			 })		
+		 })	
+  	
 });
 
-bot.on("guildMemberSpeaking", (member, speaking) => { 
-	console.log("speaking")
-//	console.log(`${member.displayName} ${speaking.has(1)}`);
-//	if (speaking.has(1)) {
-//	let hChannel = bot.channels.get(process.env.TCHANNEL);	
-//	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
-//	}  
+bot.on('guildMemberSpeaking', (member, speaking) => { 
+	console.log(`${member.displayName} ${speaking.has(1)}`);
+	if (speaking.has(1)) {
+	let hChannel = bot.channels.get(process.env.TCHANNEL);	
+	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
+	}  
 });
 
-bot.on("voiceStateUpdate", (oldState, newState) =>{
+bot.on('voiceStateUpdate', (oldState, newState) =>{
   //console.log(`${oldState.channel} ${newState.channel}`);
   //console.log(`${newState.member.roles.highest.name}`);
   let vlChannel = bot.channels.get(process.env.VLCHANNEL);
@@ -76,7 +77,7 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
 			}
   }		
 });
-bot.on("message", async message => {
+bot.on('message', async message => {
   if(message.author.bot) return;	//only accept commands from within a guild (not DM or groupDM) message.member is null for the former two  
   if(message.member===null) return;	//console.log(message.member);  		
   if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
@@ -92,13 +93,6 @@ bot.on("message", async message => {
    
   	 }
 });
-
-//bot.on('shardDisconnected', (event, shardID) => {console.log(`shard disconnect ${event} see https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent`)})
-//bot.on('shardDisconnected', function(event, shardID) {
-//    if (event == 0) return console.error(event);
-//	console.log('disconnect - reconnect attempt');
-//    bot.connect();
-//});
 
 
 bot.login(process.env.TOKEN);
