@@ -10,8 +10,9 @@ bot.on("ready", () => {      				// join the correct voice channel
 	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
 });
 
-bot.on("guildMemberSpeaking", (member, bool) => { 
-	if (bool) {
+bot.on("guildMemberSpeaking", (member, speaking) => { 
+	console.log(`${speaking.FLAGS} ${speaking.has}`);
+	if (speaking) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(Botdatestring()+member.displayName+' 				`'+member.user.id+'` ');	
 	}  
@@ -19,7 +20,7 @@ bot.on("guildMemberSpeaking", (member, bool) => {
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
   
-  console.log(`${Botdatestring()} ${oldState} ${newState}`);
+  console.log(`${Botdatestring()} ${newState.id} ${newState.channel}`);
 });
 
 bot.on("message", async message => {
