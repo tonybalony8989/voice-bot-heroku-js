@@ -6,7 +6,7 @@ bot.on("ready", () => {      				// join the correct voice channel
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  
-	.then(connection => console.log('Connected');)
+	.then(connection => console.log('Connected'))
 	// .then(async function(connection) {
 		        // connection.on('speaking', (user, speaking) => {
 				//	console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
