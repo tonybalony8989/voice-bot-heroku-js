@@ -1,0 +1,6 @@
+discord.js v12 update help
+https://discordjs.guide/additional-info/changes-in-v12.html
+
+docs 
+https://discord.js.org/#/docs/main/master/general/welcome
+use master while v12 is being developed, not 'stable' which is 11.5.1
