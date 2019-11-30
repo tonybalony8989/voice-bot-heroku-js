@@ -6,7 +6,7 @@ bot.on("ready", () => {      				// join the correct voice channel
    vChannel.join()
      	.catch(console.error)  
 	.then(connection => {console.log('Connected');
-	console.log(`${bot.voice.connections.status}`);})	
+	console.log(`${bot.voice.connections.last().status}`);})	
   	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
 });
