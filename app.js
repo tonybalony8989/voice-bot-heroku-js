@@ -6,16 +6,16 @@ bot.on("ready", () => {
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  
-		.then(connection => console.log('Connected'))
-// 		.then(async function(connection) {
-//		        connection.on('speaking', (user, speaking) => {
-//				console.log("Speaking")
-//				if (!speaking){ 
-//					return
-//					}
-//				})		
-//		})		
-	
+
+ 		.then(async function(connection) {
+		        connection.on('speaking', (user, speaking) => {
+				console.log(`Speaking ${user.username}`)
+				if (!speaking){ 
+					return
+					}
+				})		
+		})		
+		//.then(connection => console.log('Connected'))	
   	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
 });
@@ -38,10 +38,8 @@ bot.on("voiceStateUpdate", (oldMember, newMember) =>{
   
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
-  if (newMember===undefined) {return}
-  else {
-  console.log(newMember.displayName);	 }
-	
+  if (newUserChannel === undefined) {return}
+  else {  console.log(newMember.displayName)	 }	
 });
 
 bot.on("message", async message => {
