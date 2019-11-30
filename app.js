@@ -91,11 +91,13 @@ bot.on("message", async message => {
    
   	 }
 });
-bot.on('disconnect', function(msg, code) {
-    if (code === 0) return console.error(msg);
-	console.log('disconnect - reconnect attempt');
-    bot.connect();
-});
+
+bot.on('shardDisconnected', (event, shardID) => {console.log(`shard disconnect ${event} see https://developer.mozilla.org/en-US/docs/Web/API/CloseEvent`)})
+//bot.on('shardDisconnected', function(event, shardID) {
+//    if (event == 0) return console.error(event);
+//	console.log('disconnect - reconnect attempt');
+//    bot.connect();
+//});
 
 
 bot.login(process.env.TOKEN);
