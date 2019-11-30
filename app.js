@@ -12,7 +12,7 @@ bot.on('ready', () => {      				// join the correct voice channel
 	.then(connection => { console.log(`Connected ${connection.status} ${connection.speaking.has(1)} ${connection.channel.name} ${connection.voice.selfDeaf} ${connection.voice.mute}`)
 			     	connection.voice.setSelfMute(true);
 	         		const receiver = connection.createReceiver();
-re				receiver.on('opus', function(user, data) {
+				receiver.on('opus', function(user, data) {
       				console.log("its working");})
 			    })
 	// .then(async function(connection) {
