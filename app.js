@@ -11,7 +11,7 @@ bot.on("ready", () => {      				// join the correct voice channel
 });
 
 bot.on("guildMemberSpeaking", (member, speaking) => { 
-	console.log(`${speaking.FLAGS} ${speaking.has}`);
+	console.log(`${speaking.has(SPEAKING)}`);
 	if (speaking) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(Botdatestring()+member.displayName+' 				`'+member.user.id+'` ');	
@@ -20,7 +20,7 @@ bot.on("guildMemberSpeaking", (member, speaking) => {
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
   
-  console.log(`${Botdatestring()} ${newState.id} ${newState.channel}`);
+  console.log(`${Botdatestring()} ${newState.member} ${newState.channel} ${newState.channelID}`);
 });
 
 bot.on("message", async message => {
