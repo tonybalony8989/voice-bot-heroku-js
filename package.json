@@ -25,7 +25,8 @@
   },
   "homepage": "https://github.com/",
   "dependencies": {
-    "discord.js": "sillyfrog/discord.js",    
+    "discord.js": "sillyfrog/discord.js",  
+    "node-opus": "*",
     "discord.js-arbitrary-ffmpeg": ">=1.0.0",
     "ffmpeg": ">=0.0.4"
   }
