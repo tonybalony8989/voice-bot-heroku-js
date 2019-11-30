@@ -27,7 +27,9 @@ console.log(`${newState.member.roles.highest.name}`);
   let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
   let hChannel = bot.channels.get(process.env.TCHANNEL);	
-	
+  let newName=null; let newID=null; let newUserChannel=null;
+  let oldName=null; let oldID=null; let oldUserChannel=null;
+  
   if (newState.channel !== null) { console.log("new");
 	let newUserChannel = newState.channel.name;
 	let newName = newState.member.displayName;
