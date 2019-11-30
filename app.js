@@ -14,7 +14,7 @@ bot.on("ready", () => {      				// join the correct voice channel
 						// let hChannel = bot.channels.get(process.env.TCHANNEL);	
 						// hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
 						////username doesn't give the displayName within the guild
-					 } 
+					// } 
 				 })		
 		 })		
 //.then(connection => console.log('Connected'))
