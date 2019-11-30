@@ -17,9 +17,9 @@ bot.on("guildMemberSpeaking", (member, bool) => {
 	}  
 });
 
-bot.on("voiceStateUpdate", (oldMember, newMember) =>{
+bot.on("voiceStateUpdate", (oldState, newState) =>{
   
-  console.log(`${Botdatestring()} ${newMember.voiceChannel} ${oldMember.voiceChannel}`);
+  console.log(`${Botdatestring()} ${oldState} ${newState}`);
 });
 
 bot.on("message", async message => {
