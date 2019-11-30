@@ -1,21 +1,11 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 
-bot.on("ready", () => {    
-  				// join the correct voice channel 
+bot.on("ready", () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  
-
- 		.then(async function(connection) {
-		        connection.on('speaking', (user, speaking) => {				
-				console.log(`${user.username} Speaking`)
-				if (!speaking){ 
-					return
-					}				
-				})		
-		})		
-		//.then(connection => console.log('Connected'))	
+	.then(connection => console.log('Connected'))	
   	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
 });
@@ -29,17 +19,16 @@ var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
 var day=String("0"+d.getUTCDate()).slice(-2);
 var hour=String("0"+d.getUTCHours()).slice(-2);
 var min=String("0"+d.getUTCMinutes()).slice(-2);
-var sec=String("0"+d.getUTCSeconds()).slice(-2);
-//[11:22:33]
-	
+var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
+	console.log(bool.toString())
 		hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+member.displayName+' 				`'+member.user.id+'` ');	}  
 });
+
 bot.on("voiceStateUpdate", (oldMember, newMember) =>{
   
   let newUserChannel = newMember.voiceChannel
   let oldUserChannel = oldMember.voiceChannel
-  //if (newUserChannel === undefined) {return}
-  //else {  console.log(newMember.displayName);	 }	
+	
   console.log(`${newMember.displayName} ${oldMember.displayName}`);
 });
 
