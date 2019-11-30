@@ -20,9 +20,8 @@ bot.on("guildMemberSpeaking", (member, speaking) => {
 
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
-	//crash here on user d/c    
-	//console.log(`${oldState.channel} ${newState.channel}`);
-  //console.log(`${newState.member.roles.highest.name}`);
+  //console.log(`${oldState.channel} ${newState.channel}`);
+  console.log(`${newState.member.roles.highest.name}`);
   let vlChannel = bot.channels.get(process.env.VLCHANNEL);
   let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
@@ -30,7 +29,7 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
   let newName=null; let newID=null; let newUserChannel=null;
   let oldName=null; let oldID=null; let oldUserChannel=null;
   
-  if (newState.channel !== null) { //console.log("new");
+  if (newState.channel != null) { //console.log("new");
 	newUserChannel = newState.channel.name;
 	newName = newState.member.displayName;
 	newID = newState.member.id;
@@ -40,7 +39,7 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
 	oldName = oldState.member.displayName;
 	oldID = oldState.member.id;    
   }
-	console.log(`${newName}`);
+
   if (oldState.channel === null) {  	//user joined channel  	
 	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
