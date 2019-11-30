@@ -13,15 +13,8 @@ bot.on("ready", () => {      				// join the correct voice channel
 bot.on("guildMemberSpeaking", (member, bool) => { 
 	if (bool) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);
-var d = new Date();
-var year=String(d.getUTCFullYear());
-var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
-var day=String("0"+d.getUTCDate()).slice(-2);
-var hour=String("0"+d.getUTCHours()).slice(-2);
-var min=String("0"+d.getUTCMinutes()).slice(-2);
-var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
-	console.log(`${bool.toString()}`);
-		hChannel.send('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  '+member.displayName+' 				`'+member.user.id+'` ');	}  
+	console.log(bool);
+	hChannel.send(Botdatestring()+member.displayName+' 				`'+member.user.id+'` ');	}  
 });
 
 bot.on("voiceStateUpdate", (oldMember, newMember) =>{
@@ -60,3 +53,14 @@ bot.on('disconnect', function(msg, code) {
 
 
 bot.login(process.env.TOKEN);
+
+function Botdatestring() {
+var d = new Date();
+var year=String(d.getUTCFullYear());
+var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
+var day=String("0"+d.getUTCDate()).slice(-2);
+var hour=String("0"+d.getUTCHours()).slice(-2);
+var min=String("0"+d.getUTCMinutes()).slice(-2);
+var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
+return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
+}
