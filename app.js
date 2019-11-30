@@ -8,7 +8,7 @@ bot.on("ready", () => {
      	.catch(console.error)  
  		.then(async function(connection) {
 		        connection.on('speaking', (user, speaking) => {
-				console.log("Speaking")
+				console.log('Speaking ${user.username}')
 				if (!speaking){ 
 					return
 					}
