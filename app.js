@@ -20,17 +20,27 @@ bot.on("guildMemberSpeaking", (member, speaking) => {
 
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
-	//crash here on user d/c
-  let newUserChannel = newState.channel.name;
-  let oldUserChannel = oldState.channel.name;
-  let newName = newState.member.displayName;
-  let newID = newState.member.id;
+	//crash here on user d/c    
   let vlChannel = bot.channels.get(process.env.VLCHANNEL);
   let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
-  let hChannel = bot.channels.get(process.env.TCHANNEL);
+  let hChannel = bot.channels.get(process.env.TCHANNEL);	
+	
+  if (newState.channel !== null) {
+	let newUserChannel = newState.channel.name;
+	let newName = newState.member.displayName;
+	let newID = newState.member.id;
+  }
+  if (oldState.channel !== null) {
+	let oldUserChannel = oldState.channel.name;
+	let oldName = oldState.member.displayName;
+	let oldID = oldState.member.id;    
+  }
 	
   if (oldState.channel === null) {  	//user joined channel  	
+	let newUserChannel = newState.channel.name;
+	let newName = newState.member.displayName;
+	let newID = newState.member.id;
 	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
   	ttsChannel.send(newMember.displayName+' JOINED '+newUserChannel.name.replace(/\s/g, '')+'', { tts: true});
@@ -39,13 +49,11 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
 		// 	}
 		// check out .highest  https://discord.js.org/#/docs/main/master/class/GuildMemberRoleStore
   }
-  else {
-	    let oldName = oldState.member.displayName;
-		let oldID = oldState.member.id;  
+  else {		
 		if (newState.channel === null) {	//user left channel
-			vlChannel.send(BotDate()+oldMember.displayName+'`'+oldMember.user.id+'` ***LEFT*** _'+oldUserChannel+'_');
-			hChannel.send(BotDate()+oldMember.displayName+'`'+oldMember.user.id+'` ***LEFT*** _'+oldUserChannel+'_');
-			ttsChannel.send(oldMember.displayName+' LEFT '+oldUserChannel.name.replace(/\s/g, '')+'', { tts: true});
+			vlChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_');
+			hChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_');
+			ttsChannel.send(oldName+' LEFT '+oldUserChannel.replace(/\s/g, '')+'', { tts: true});
 			}
 		else {	//user switched channel
 			if (newUserChannel != oldUserChannel) {
