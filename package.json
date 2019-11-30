@@ -26,7 +26,7 @@
   "homepage": "https://github.com/",
   "dependencies": {
     "discord.js": "sillyfrog/discord.js#master",  
-    "opusscript": "0.0.6",
+    "opusscript": "*",
     "discord.js-arbitrary-ffmpeg": ">=1.0.0",
     "ffmpeg": ">=0.0.4"
   }
