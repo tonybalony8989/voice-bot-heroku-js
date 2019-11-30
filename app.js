@@ -1,6 +1,27 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 
+var opusscript = require("opusscript");
+
+// 48kHz sampling rate, 20ms frame duration, stereo audio (2 channels)
+var samplingRate = 48000;
+var frameDuration = 20;
+var channels = 2;
+
+// Optimize encoding for audio. Available applications are VOIP, AUDIO, and RESTRICTED_LOWDELAY
+var encoder = new opusscript(samplingRate, channels, opusscript.Application.AUDIO);
+
+var frameSize = samplingRate * frameDuration / 1000;
+
+// Get PCM data from somewhere and encode it into opus
+var pcmData = new Buffer(pcmSource);
+var encodedPacket = encoder.encode(pcmData, frameSize);
+
+// Decode the opus packet back into PCM
+var decodedPacket = encoder.decode(encodedPacket);
+
+
+
 bot.on("ready", () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
@@ -16,7 +37,7 @@ bot.on("ready", () => {      				// join the correct voice channel
 		})		
 	//.then(connection => {console.log('Connected');
   	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
-	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
+	//add node-opus build pack https://github.com/Rantanen/node-opus.git
 });
 
 // bot.on("guildMemberSpeaking", (member, speaking) => { 
