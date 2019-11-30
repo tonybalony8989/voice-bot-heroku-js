@@ -22,6 +22,7 @@ bot.on("guildMemberSpeaking", (member, speaking) => {
 bot.on("voiceStateUpdate", (oldState, newState) =>{
 	//crash here on user d/c    
 	console.log(`${oldState.channel} ${newState.channel}`);
+console.log(`${newState.member.roles.last().name}`);
   let vlChannel = bot.channels.get(process.env.VLCHANNEL);
   let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
@@ -41,7 +42,7 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
   if (oldState.channel === null) {  	//user joined channel  	
 	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
-  	ttsChannel.send(newMember.newName+' JOINED '+newUserChannel.name.replace(/\s/g, '')+'', { tts: true});
+  	ttsChannel.send(newMember.newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
 		// 	if ((newState.member.roles.last().name) === "@everyone") {
 		//		trackChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 		// 	}
