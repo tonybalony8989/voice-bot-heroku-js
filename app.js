@@ -21,7 +21,41 @@ bot.on("guildMemberSpeaking", (member, speaking) => {
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
 	//crash here on user d/c
-  console.log(`${oldState.channel} ${newState.channel}`);
+  let newUserChannel = newState.channel.name;
+  let oldUserChannel = oldState.channel.name;
+  let newName = newState.member.displayName;
+  let newID = newState.member.id;
+  let vlChannel = bot.channels.get(process.env.VLCHANNEL);
+  let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
+  let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
+  let hChannel = bot.channels.get(process.env.TCHANNEL);
+	
+  if (oldState.channel === null) {  	//user joined channel  	
+	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
+	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
+  	ttsChannel.send(newMember.displayName+' JOINED '+newUserChannel.name.replace(/\s/g, '')+'', { tts: true});
+		// 	if ((newState.member.roles.last().name) === "@everyone") {
+		//		trackChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
+		// 	}
+		// check out .highest  https://discord.js.org/#/docs/main/master/class/GuildMemberRoleStore
+  }
+  else {
+	    let oldName = oldState.member.displayName;
+		let oldID = oldState.member.id;  
+		if (newState.channel === null) {	//user left channel
+			vlChannel.send(BotDate()+oldMember.displayName+'`'+oldMember.user.id+'` ***LEFT*** _'+oldUserChannel+'_');
+			hChannel.send(BotDate()+oldMember.displayName+'`'+oldMember.user.id+'` ***LEFT*** _'+oldUserChannel+'_');
+			ttsChannel.send(oldMember.displayName+' LEFT '+oldUserChannel.name.replace(/\s/g, '')+'', { tts: true});
+			}
+		else {	//user switched channel
+			if (newUserChannel != oldUserChannel) {
+				vlChannel.send(BotDate()+oldName+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
+				hChannel.send(BotDate()+oldName+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
+				ttsChannel.send(oldName+' SWITCHED '+oldUserChannel.replace(/\s/g, '')+' to '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
+				//str = str.replace(/\s/g, '');
+				}
+			}
+  }		
 });
 bot.on("message", async message => {
   			//try triggering on a different event and using client.voiceConnections property https://discord.js.org/#/docs/main/stable/class/Client?scrollTo=voiceConnections
