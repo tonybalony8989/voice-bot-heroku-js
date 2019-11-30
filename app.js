@@ -21,6 +21,7 @@ bot.on("guildMemberSpeaking", (member, speaking) => {
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
 	//crash here on user d/c    
+	console.log(`${oldState.channel} ${newState.channel}`);
   let vlChannel = bot.channels.get(process.env.VLCHANNEL);
   let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
