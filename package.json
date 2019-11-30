@@ -27,7 +27,6 @@
   "dependencies": {
     "discord.js": "tonybalony8989/discord.js", 
     "node-opus": "0.3",
-    "discord.js-arbitrary-ffmpeg": ">=1.0.0",
     "ffmpeg": ">=0.0.4"
   }
 }
