@@ -28,12 +28,12 @@ console.log(`${newState.member.roles.last().name}`);
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
   let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	
-  if (oldState.channel !== null) { console.log("A");
+  if (newState.channel !== null) { console.log("A");
 	let newUserChannel = newState.channel.name;
 	let newName = newState.member.displayName;
 	let newID = newState.member.id;
   }
-  if (newState.channel !== null) { console.log("B");
+  if (oldState.channel !== null) { console.log("B");
 	let oldUserChannel = oldState.channel.name;
 	let oldName = oldState.member.displayName;
 	let oldID = oldState.member.id;    
