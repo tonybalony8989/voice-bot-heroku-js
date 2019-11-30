@@ -11,7 +11,7 @@ bot.on("ready", () => {      				// join the correct voice channel
 });
 
 bot.on("guildMemberSpeaking", (member, speaking) => { 
-	//console.log(`${member.displayName} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
+	console.log(`${member.displayName} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
 	if (speaking.has(1)) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
@@ -44,7 +44,7 @@ bot.on("voiceStateUpdate", (oldState, newState) =>{
 	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
   	ttsChannel.send(newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
-		 	if ((newState.member.roles.highest.name) == "Moderator3") {
+		 	if ((newState.member.roles.highest.name) == "Moderator3") { console.log('new');
 				trackChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
 		 	}		
   }
