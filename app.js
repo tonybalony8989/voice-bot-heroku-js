@@ -7,7 +7,7 @@ bot.on("ready", () => {      				// join the correct voice channel
      	.catch(console.error)  
 	 		.then(async function(connection) {
 		        connection.on('speaking', (user, speaking) => {
-					console.log(`${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
+					console.log(`${member.displayName} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
 					if (speaking.has(1)) {
 						let hChannel = bot.channels.get(process.env.TCHANNEL);	
 						hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
@@ -79,7 +79,7 @@ bot.on("message", async message => {
   if(message.member===null) return;
 	//console.log(message.member);
   		
-  if((message.content === "z join fleet voice please") && ((message.member.roles.last().name) !== "@everyone") ) {
+  if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
   	// join the correct voice channel 
 	  
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
