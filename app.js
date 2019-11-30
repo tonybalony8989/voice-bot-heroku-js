@@ -9,7 +9,12 @@ bot.on('ready', () => {      				// join the correct voice channel
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  	
-	.then(connection => console.log(`Connected ${connection.status} ${connection.speaking} ${connection.channel.name}`))
+	.then(connection => { console.log(`Connected ${connection.status} ${connection.speaking.has(1)} ${connection.channel.name} ${connection.voice.selfDeaf} ${connection.voice.mute}`)
+			     	connection.voice.setSelfMute(true);
+	         		const receiver = connection.createReceiver();
+re				receiver.on('opus', function(user, data) {
+      				console.log("its working");})
+			    })
 	// .then(async function(connection) {
 	//	         connection.on('speaking', (user, speaking) => {
 	//			 console.log("speaking async");
