@@ -5,19 +5,27 @@ bot.on("ready", () => {      				// join the correct voice channel
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  
-	.then(connection => {console.log('Connected');
-	console.log(`${bot.voice.connections.last().status}`);})	
+	 		.then(async function(connection) {
+		        connection.on('speaking', (user, speaking) => {
+					console.log(`${member.displayName} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
+					if (speaking.has(1)) {
+						let hChannel = bot.channels.get(process.env.TCHANNEL);	
+						hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
+					} 
+				})		
+		})		
+	//.then(connection => {console.log('Connected');
   	//add ffmpeg build pack https://github.com/jayzes/heroku-buildpack-ffmpeg
 	//bot.voiceConnections.map(voiceConnection => console.log(voiceConnection));
 });
 
-bot.on("guildMemberSpeaking", (member, speaking) => { 
-	//console.log(`${member.displayName} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
-	if (speaking.has(1)) {
-	let hChannel = bot.channels.get(process.env.TCHANNEL);	
-	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
-	}  
-});
+// bot.on("guildMemberSpeaking", (member, speaking) => { 
+//	console.log(`${member.displayName} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
+	// if (speaking.has(1)) {
+	// let hChannel = bot.channels.get(process.env.TCHANNEL);	
+	// hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
+	// }  
+// });
 
 bot.on("voiceStateUpdate", (oldState, newState) =>{
   //console.log(`${oldState.channel} ${newState.channel}`);
