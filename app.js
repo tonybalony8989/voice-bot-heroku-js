@@ -11,7 +11,7 @@ bot.on("ready", () => {      				// join the correct voice channel
 });
 
 bot.on("guildMemberSpeaking", (member, speaking) => { 
-	console.log(`${speaking.has(SPEAKING)}`);
+	console.log(`${speaking.has('SPEAKING')}`);
 	if (speaking) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(Botdatestring()+member.displayName+' 				`'+member.user.id+'` ');	
