@@ -4,3 +4,14 @@ https://discordjs.guide/additional-info/changes-in-v12.html
 docs 
 https://discord.js.org/#/docs/main/master/general/welcome
 use master while v12 is being developed, not 'stable' which is 11.5.1
+
+
+---heroku buildpacks
+//https://github.com/jonathanong/heroku-buildpack-ffmpeg-latest.git
+//	https://elements.heroku.com/buildpacks/dubsmash/heroku-buildpack-opus 
+//* https://github.com/jayzes/heroku-buildpack-ffmpeg
+//* https://github.com/codeinteger6/heroku-buildpack-libopus 
+//or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
+
+* has been used previously.
+* opus unreliable during transition - guildMemberSpeaking unreliable
