@@ -5,26 +5,12 @@
   "main": "app.js",
   "engines": {
     "node": "*",
-    "yarn": "*"
+    "npm": "*"
   },
   "scripts": {
     "start": "node app.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/"
-  },
-  "keywords": [
-    "heroku",
-    "discord.js"
-  ],
-  "author": "someone",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/"
-  },
-  "homepage": "https://github.com/",
-  "dependencies": {
+    "dependencies": {
     "discord.js": "tonybalony8989/discord.js#master", 
     "opusscript": "0.0.7",
     "ffmpeg": ">=0.0.4"
