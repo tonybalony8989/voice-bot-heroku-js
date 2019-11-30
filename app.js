@@ -1,7 +1,7 @@
 const Discord = require("discord.js");
 const bot = new Discord.Client();
 
-var opusscript = require("opusscript");
+var usscript = require("opusscript");
 // 48kHz sampling rate, 20ms frame duration, stereo audio (2 channels)
 var samplingRate = 48000;
 var frameDuration = 20;
