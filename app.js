@@ -9,7 +9,7 @@ bot.on('ready', () => {      				// join the correct voice channel
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  	
-	.then(connection => console.log('Connected'))
+	.then(connection => console.log(`Connected ${connection.status} ${connection.speaking} ${connection.channel.name}`))
 	// .then(async function(connection) {
 	//	         connection.on('speaking', (user, speaking) => {
 	//			 console.log("speaking async");
