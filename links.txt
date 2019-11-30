@@ -15,3 +15,5 @@ use master while v12 is being developed, not 'stable' which is 11.5.1
 
 * has been used previously.
 * opus unreliable during transition - guildMemberSpeaking unreliable
+
+https://github.com/sillyfrog/discord.js.git#bada4ff0af82208481ba48a0d58c9e12235f7f10
