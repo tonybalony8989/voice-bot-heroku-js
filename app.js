@@ -12,6 +12,8 @@ bot.on('ready', () => {      				// join the correct voice channel
 	.then(connection => { console.log(`Connected status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
 			     	connection.voice.setSelfMute(true);
 			     console.log(`status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
+			     let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
+			     trackChannel.send(BotDate()+" new voice connection");
 			    })
 	// .then(async function(connection) {
 	//	         connection.on('speaking', (user, speaking) => {
