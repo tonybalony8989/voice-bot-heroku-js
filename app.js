@@ -14,7 +14,7 @@ bot.on('ready', () => {      				// join the correct voice channel
 			     console.log(`status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
 			     let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
 			     trackChannel.send(BotDate()+" new voice connection");
-			   //  connection.play('http://cas.vexor.net/red/alarm2.mp3', { volume: 0.5 });
+			   // connection.play('', { volume: 0.1 });
 			    })
 	// .then(async function(connection) {
 	//	         connection.on('speaking', (user, speaking) => {
