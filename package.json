@@ -14,6 +14,7 @@
     "dependencies": {
     "discord.js": "https://github.com/sillyfrog/discord.js.git#bada4ff0af82208481ba48a0d58c9e12235f7f10", 
     "opusscript": "0.0.7",
+     "node-opus": "*",
     "ffmpeg": ">=0.0.4"
   }
 }
