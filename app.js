@@ -10,28 +10,16 @@ bot.on('ready', () => {      				// join the correct voice channel
    vChannel.join()
      	.catch(console.error)  	
 	.then(connection => { console.log(`Connected status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
-			     	
+			     	connection.voice.setSelfDeaf(true);
+					connection.voice.setSelfMute(false);
 					setTimeout(function() {
-							connection.voice.setSelfMute(false);
-							connection.voice.setSelfDeaf(true);}, 2000)
-					connection.voice.setSelfDeaf(false);
-					connection.voice.setSelfMute(true);
-			     console.log(`status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
+							connection.voice.setSelfMute(true);
+							connection.voice.setSelfDeaf(false);}, 2000)					
 			     let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
 			     trackChannel.send(BotDate()+":boom: new voice connection");
-			     connection.play('', { volume: 0.1 });
+			     connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
+				 console.log(`OK status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
 			    })
-	// .then(async function(connection) {
-	//	         connection.on('speaking', (user, speaking) => {
-	//			 console.log("speaking async");
-	//				//console.log(`${user.username} ${speaking.has(1)} ${speaking.has(2)} ${speaking.has(3)} ${speaking.has(4)} ${speaking.has(5)} ${speaking.has(6)} ${speaking.has(7)}`);
-	//				// if (speaking.has(1)) {
-	//					// let hChannel = bot.channels.get(process.env.TCHANNEL);	
-	//					// hChannel.send(BotDate()+user.username+' 				`'+user.id+'` ');	
-	//					////username doesn't give the displayName within the guild
-	//				// } 
-	//			 })		
-	//	 })	
   	
 });
 
