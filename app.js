@@ -10,11 +10,16 @@ bot.on('ready', () => {      				// join the correct voice channel
    vChannel.join()
      	.catch(console.error)  	
 	.then(connection => { console.log(`Connected status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
-			     	connection.voice.setSelfMute(true);
+			     	
+					setTimeout(function() {
+							connection.voice.setSelfMute(false);
+							connection.voice.setSelfDeaf(true);}, 2000)
+					connection.voice.setSelfDeaf(false);
+					connection.voice.setSelfMute(true);
 			     console.log(`status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
 			     let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
-			     trackChannel.send(BotDate()+" new voice connection");
-			   //  connection.play('http://cas.vexor.net/red/alarm2.mp3', { volume: 0.5 });
+			     trackChannel.send(BotDate()+":boom: new voice connection");
+			     connection.play('', { volume: 0.1 });
 			    })
 	// .then(async function(connection) {
 	//	         connection.on('speaking', (user, speaking) => {
@@ -36,6 +41,8 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
 	}  
+	
+	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
 });
 
 bot.on('voiceStateUpdate', (oldState, newState) =>{
@@ -60,17 +67,17 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
   }
 
   if (oldState.channel === null) {  	//user joined channel  	
-	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
-	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');	  
+	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
+	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');	  
   	ttsChannel.send(newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
 		 	if (newState.member.roles.highest.name == "@everyone") {
-				trackChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_');
+				trackChannel.send(BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
 		 	}		
   }
   else {		
 		if (newState.channel === null) {	//user left channel
-			vlChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_');
-			hChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_');
+			vlChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
+			hChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
 			ttsChannel.send(oldName+' LEFT '+oldUserChannel.replace(/\s/g, '')+'', { tts: true});
 			}
 		else {	//user switched channel
@@ -91,6 +98,8 @@ bot.on('message', async message => {
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
 	vChannel.leave(); 
 	console.log('Left channel - Wait 5 seconds');
+	let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
+	trackChannel.send(BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id);
 	  setTimeout(function() {
 			vChannel.join()
 			.then(connection => console.log('Connected - manual. '+message.author.username+' User ID= '+message.author.id))
