@@ -9,16 +9,7 @@ bot.on('ready', () => {      				// join the correct voice channel
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  	
-	.then(connection => { console.log(`Connected status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
-			     	connection.voice.setSelfDeaf(true);
-					connection.voice.setSelfMute(false);
-					setTimeout(function() {
-							connection.voice.setSelfMute(true);
-							connection.voice.setSelfDeaf(false);}, 2000)					
-			     let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
-			     trackChannel.send(BotDate()+":boom: new voice connection");
-			     connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
-				 console.log(`OK status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
+		.then(connection => { BotConn(connection, ":boom: new voice connection")
 			    })
   	
 });
@@ -86,11 +77,11 @@ bot.on('message', async message => {
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
 	vChannel.leave(); 
 	console.log('Left channel - Wait 5 seconds');
-	let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
-	trackChannel.send(BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id);
+trackChannel.send(BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id);
 	  setTimeout(function() {
-			vChannel.join()
-			.then(connection => console.log('Connected - manual. '+message.author.username+' User ID= '+message.author.id))
+			vChannel.join()			
+			.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id)
+				})			
 			.catch(console.error);   
 			}, 5000);
    
@@ -110,4 +101,18 @@ function BotDate() {
 	var min=String("0"+d.getUTCMinutes()).slice(-2);
 	var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
 return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
+}
+
+function BotConn(bConn, msgString) {
+	console.log(`Connected status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
+	console.log(msgString);
+	  	bConn.voice.setSelfDeaf(true);
+		bConn.voice.setSelfMute(false);
+		setTimeout(function() {
+			bConn.voice.setSelfMute(true);
+			bConn.voice.setSelfDeaf(false);}, 2000)					
+		let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
+		trackChannel.send(BotDate()+msgString);
+		bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
+		console.log(`OK status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 }
