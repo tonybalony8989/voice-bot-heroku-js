@@ -10,8 +10,7 @@ bot.on('ready', () => {      				// join the correct voice channel
    vChannel.join()
      	.catch(console.error)  	
 		.then(connection => { BotConn(connection, ":boom: new voice connection")
-			    })
-  	
+			    })  	
 });
 
 bot.on('guildMemberSpeaking', (member, speaking) => { 
@@ -104,7 +103,7 @@ return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
 }
 
 function BotConn(bConn, msgString) {
-	console.log(`Connected status:${connection.status} speaking:${connection.speaking.has(1)} ch.name:${connection.channel.name} selfDeaf:${connection.voice.selfDeaf} mute:${connection.voice.mute}`)
+	console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 	console.log(msgString);
 	  	bConn.voice.setSelfDeaf(true);
 		bConn.voice.setSelfMute(false);
