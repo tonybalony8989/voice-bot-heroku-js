@@ -12,7 +12,7 @@
     "start": "node app.js"
   },
     "dependencies": {
-    "discord.js": "https://github.com/discordjs/discord.js.git#/4585d965b430ed0661ac8d3e32b738f27b4c9d42", 
+    "discord.js": "https://github.com/discordjs/discord.js/tree/4585d965b430ed0661ac8d3e32b738f27b4c9d42", 
     "opusscript": "0.0.7",
      "node-opus": "*",
     "ffmpeg": ">=0.0.4"
