@@ -74,7 +74,7 @@ bot.on('message', async message => {
   if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
-	vChannel.leave(); 
+	vChannel.leave()
 		.catch(console.error) 
 	console.log('Left channel - Wait 5 seconds');
 	  setTimeout(function() {
