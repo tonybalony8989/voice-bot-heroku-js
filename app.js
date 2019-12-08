@@ -69,14 +69,15 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
   }		
 });
 bot.on('message', async message => {
+try {
   if(message.author.bot) return;	//only accept commands from within a guild (not DM or groupDM) message.member is null for the former two  
   if(message.member===null) return;	//console.log(message.member);  		
   if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
 	vChannel.leave(); 
+		.catch(console.error) 
 	console.log('Left channel - Wait 5 seconds');
-trackChannel.send(BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id);
 	  setTimeout(function() {
 			vChannel.join()			
 			.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id)
@@ -85,11 +86,14 @@ trackChannel.send(BotDate()+":dizzy: rejoin request from "+message.author.userna
 			}, 5000);
    
   	 }
+	}
+catch
+	{console.error		
+	}
 });
 
 
 bot.login(process.env.TOKEN);
-
 
 function BotDate() {
 	var d = new Date();
