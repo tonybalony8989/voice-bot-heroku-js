@@ -103,7 +103,7 @@ function intervalFunc() {
 		//nothing has happened since last interval - take action
 		//do a leave and join, say the chats occurances into the trackchannel
 		let vChannel = bot.channels.get(process.env.VCHANNEL);
-		vChannel.leave()
+		vChannel.leave();
 		console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
 		//use alternate function that doesn't play audio??
 		setTimeout(function() {
