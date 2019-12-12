@@ -5,11 +5,13 @@ const bot = new Discord.Client();
 //* https://github.com/jayzes/heroku-buildpack-ffmpeg
 //* https://github.com/codeinteger6/heroku-buildpack-libopus 
 //or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
+var chats = 1; //tracking chat occurances
+var lastChats = 0; //tracking of chat occurances
 bot.on('ready', () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
      	.catch(console.error)  	
-		.then(connection => { BotConn(connection, ":boom: new voice connection")
+		.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    })  	
 });
 
@@ -19,7 +21,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
 	}  
-	
+	chats=chats+1;
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
 });
 
@@ -79,17 +81,41 @@ bot.on('message', async message => {
 	console.log('Left channel - Wait 5 seconds');
 	  setTimeout(function() {
 			vChannel.join()			
-			.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id)
+			.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
 				})			
 			.catch(console.error);   
 			}, 5000);
    
   	 }
+	//message.guild.ownerID message.member.id
 
 });
 
 
 bot.login(process.env.TOKEN);
+
+
+//setup the setInterval here - 1800s is 30minutes
+setInterval(intervalFunc,1800000);
+
+function intervalFunc {
+	if (lastChats >= chats) {
+		//nothing has happened since last interval - take action
+		//do a leave and join, say the chats occurances into the trackchannel
+		let vChannel = bot.channels.get(process.env.VCHANNEL);
+		vChannel.leave()
+		.catch(console.error) 
+		console.log('Interval Rejoin - Wait 2.5 seconds');
+		//use alternate function that doesn't play audio??
+		setTimeout(function() {
+			vChannel.join()			
+			.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, false)
+				})			
+			.catch(console.error);   
+			}, 2500);
+	}	
+	lastChats=chats; //track the current state
+}
 
 function BotDate() {
 	var d = new Date();
@@ -102,7 +128,7 @@ function BotDate() {
 return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
 }
 
-function BotConn(bConn, msgString) {
+function BotConn(bConn, msgString, playSound) {
 	console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 	console.log(msgString);
 	  	bConn.voice.setSelfDeaf(true);
@@ -112,6 +138,8 @@ function BotConn(bConn, msgString) {
 			bConn.voice.setSelfDeaf(false);}, 2000)					
 		let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
 		trackChannel.send(BotDate()+msgString);
-		bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
+		if (playSound) {
+			bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
+			}		
 		console.log(`OK status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 }
