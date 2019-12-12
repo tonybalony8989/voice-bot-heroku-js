@@ -20,8 +20,9 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	if (speaking.has(1)) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
-	}  
 	chats=chats+1;
+	}  
+	
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
 });
 
@@ -77,7 +78,6 @@ bot.on('message', async message => {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
 	vChannel.leave()
-		.catch(console.error) 
 	console.log('Left channel - Wait 5 seconds');
 	  setTimeout(function() {
 			vChannel.join()			
@@ -104,7 +104,6 @@ function intervalFunc() {
 		//do a leave and join, say the chats occurances into the trackchannel
 		let vChannel = bot.channels.get(process.env.VCHANNEL);
 		vChannel.leave()
-		.catch(console.error) 
 		console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
 		//use alternate function that doesn't play audio??
 		setTimeout(function() {
