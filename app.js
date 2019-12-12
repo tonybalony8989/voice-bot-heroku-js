@@ -115,7 +115,7 @@ function intervalFunc() {
 			}, 2500);
 	}
 	else {
-		console.log('current chats:'+chats);
+		console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);
 	}
 	lastChats=chats; //track the current state
 }
