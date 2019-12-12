@@ -96,7 +96,7 @@ bot.login(process.env.TOKEN);
 
 
 //setup the setInterval here - 1800s is 30minutes
-setInterval(intervalFunc,1800000);
+setInterval(intervalFunc,3600000);
 
 function intervalFunc() {
 	if (lastChats >= chats) {
@@ -115,8 +115,10 @@ function intervalFunc() {
 	}
 	else {
 		console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);
+		lastChats=chats; //track the current state
 	}
 	lastChats=chats; //track the current state
+	
 }
 
 function BotDate() {
@@ -131,7 +133,7 @@ return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
 }
 
 function BotConn(bConn, msgString, playSound) {
-	console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
+	//console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 	console.log(msgString);
 	  	bConn.voice.setSelfDeaf(true);
 		bConn.voice.setSelfMute(false);
