@@ -91,12 +91,15 @@ bot.on('message', async message => {
 
 });
 
+//catch promise errors
+process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 
 bot.login(process.env.TOKEN);
 
 
 //setup the setInterval here - 600s is 10minutes
 setInterval(intervalFunc,600000);
+
 
 function intervalFunc() {
 	if (lastChats >= chats) {
@@ -112,7 +115,7 @@ function intervalFunc() {
 			//use alternate function that doesn't play audio??
 			setTimeout(function() {
 				vChannel.join()			
-				.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
+				.then(connection => { BotConn(connection, ":clock3: interval rejoin - no chats recently:"+chats, true)
 					})			
 				.catch(console.error);   
 				}, 2500);
