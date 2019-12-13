@@ -24,7 +24,6 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
 	chats=chats+1;
 	}  
-	
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
 });
 
@@ -86,10 +85,9 @@ bot.on('message', async message => {
 			.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
 				})			
 			.catch(console.error);   
-			}, 5000);
-   
+			}, 5000);   
   	 }
-	//message.guild.ownerID message.member.id
+	//message.guild.ownerID === message.member.id
 
 });
 
@@ -97,7 +95,7 @@ bot.on('message', async message => {
 bot.login(process.env.TOKEN);
 
 
-//setup the setInterval here - 1800s is 30minutes
+//setup the setInterval here - 600s is 10minutes
 setInterval(intervalFunc,600000);
 
 function intervalFunc() {
@@ -106,7 +104,7 @@ function intervalFunc() {
 		var newDate= new Date();
 		var diff= newDate-lastRejoin;
 		if (diff>1800000) {
-			//we have exceeded the cooldown timer (diff is in milliseconds)
+			//we have exceeded the cooldown timer (diff is in milliseconds, 1,800,000ms for 30min cooldown)
 			//do a leave and join, say the chats occurances into the trackchannel
 			let vChannel = bot.channels.get(process.env.VCHANNEL);
 			vChannel.leave();
@@ -153,5 +151,5 @@ function BotConn(bConn, msgString, playSound) {
 			//bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
 			bConn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.1 });
 			}		
-		console.log(`OK status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
+		//console.log(`OK status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 }
