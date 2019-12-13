@@ -7,6 +7,8 @@ const bot = new Discord.Client();
 //or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
 var chats = 1; //tracking chat occurances
 var lastChats = 0; //tracking of chat occurances
+var lastRejoin = new Date('2010/01/05 10:11:12');
+
 bot.on('ready', () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    vChannel.join()
@@ -96,26 +98,31 @@ bot.login(process.env.TOKEN);
 
 
 //setup the setInterval here - 1800s is 30minutes
-setInterval(intervalFunc,3600000);
+setInterval(intervalFunc,600000);
 
 function intervalFunc() {
 	if (lastChats >= chats) {
 		//nothing has happened since last interval - take action
-		//do a leave and join, say the chats occurances into the trackchannel
-		let vChannel = bot.channels.get(process.env.VCHANNEL);
-		vChannel.leave();
-		console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
-		//use alternate function that doesn't play audio??
-		setTimeout(function() {
-			vChannel.join()			
-			.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, false)
-				})			
-			.catch(console.error);   
-			}, 2500);
+		var newDate= new Date();
+		var diff= newDate-lastRejoin;
+		if (diff>1800000) {
+			//we have exceeded the cooldown timer (diff is in milliseconds)
+			//do a leave and join, say the chats occurances into the trackchannel
+			let vChannel = bot.channels.get(process.env.VCHANNEL);
+			vChannel.leave();
+			console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
+			//use alternate function that doesn't play audio??
+			setTimeout(function() {
+				vChannel.join()			
+				.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
+					})			
+				.catch(console.error);   
+				}, 2500);
+			lastRejoin=new Date();
+		}
 	}
 	else {
-		console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);
-		lastChats=chats; //track the current state
+		console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);		
 	}
 	lastChats=chats; //track the current state
 	
