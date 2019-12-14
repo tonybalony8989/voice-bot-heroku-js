@@ -15,7 +15,7 @@ bot.on('ready', async () => {      				// join the correct voice channel
    await vChannel.join()
 			.catch(console.error)  	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true);
-			VConn=connection;
+			VCconn=ClientVoiceManager.connections.last();
 			    })  	
 	console.log(VCconn);
 });
@@ -85,8 +85,7 @@ bot.on('message', async message => {
 	console.log('Left channel - Wait 5 seconds');
 	  setTimeout(function() {
 			vChannel.join()			
-				.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true);
-				VCconn = connection;
+				.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
 					})			
 				.catch(console.error);   
 				}, 5000);   
@@ -126,8 +125,7 @@ function intervalFunc() {
 			//use alternate function that doesn't play audio??
 			setTimeout(function() {
 				vChannel.join()			
-					.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true);
-					VCconn = connection;
+					.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
 						})			
 					.catch(console.error);   
 					}, 240000);
