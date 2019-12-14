@@ -118,7 +118,7 @@ function intervalFunc() {
 				.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
 					})			
 				.catch(console.error);   
-				}, 2500);
+				}, 240000);
 			lastRejoin=new Date();
 		}
 	}
