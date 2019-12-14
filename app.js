@@ -12,10 +12,10 @@ var VCconn = null;
 
 bot.on('ready', async () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
-   await vChannel.join()
-			.catch(console.error)  	
-			.then(connection => { BotConn(connection, ":boom: new voice connection", true);
+   await vChannel.join()			 	
+			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    }) 
+			.catch(console.error) 
 });
 
 bot.on('guildMemberSpeaking', (member, speaking) => { 
