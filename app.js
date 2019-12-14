@@ -16,6 +16,7 @@ bot.on('ready', async () => {      				// join the correct voice channel
 			.catch(console.error)  	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    })  	
+	console.log(VCconn);
 });
 
 bot.on('guildMemberSpeaking', (member, speaking) => { 
