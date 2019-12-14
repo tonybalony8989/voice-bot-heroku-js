@@ -147,11 +147,11 @@ return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
 function BotConn(bConn, msgString, playSound) {
 	//console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 	//console.log(msgString);
-	  	bConn.voice.setSelfDeaf(true);
+	  	bConn.voice.setSelfDeaf(false);
 		bConn.voice.setSelfMute(false);
 		setTimeout(function() {
-			bConn.voice.setSelfMute(true);
-			bConn.voice.setSelfDeaf(false);}, 2000)					
+		//	bConn.voice.setSelfMute(true);
+		//	bConn.voice.setSelfDeaf(false);}, 2000)					
 		track(BotDate()+msgString);
 		if (playSound) {
 			//bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });			
