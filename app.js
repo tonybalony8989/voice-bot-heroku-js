@@ -15,9 +15,8 @@ bot.on('ready', async () => {      				// join the correct voice channel
    await vChannel.join()
 			.catch(console.error)  	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true);
-			console.log(connection);
-			    })  	
-	console.log(VCconn);
+			//console.log(connection);
+			    }) 
 });
 
 bot.on('guildMemberSpeaking', (member, speaking) => { 
@@ -31,8 +30,6 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 });
 
 bot.on('voiceStateUpdate', (oldState, newState) =>{
-  //console.log(`${oldState.channel} ${newState.channel}`);
-  //console.log(`${newState.member.roles.highest.name}`);
   let vlChannel = bot.channels.get(process.env.VLCHANNEL);
   let ttsChannel = bot.channels.get(process.env.TTSCHANNEL);
   let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
@@ -94,6 +91,10 @@ bot.on('message', async message => {
   if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3")) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
+	vChannel.join()			
+		.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
+			})			
+		.catch(console.error); 
 	//VCconn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 1 });
 	console.log(VCconn);
   
