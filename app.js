@@ -12,7 +12,7 @@ var VCconn = null;
 
 bot.on('ready', async () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
-   await VCconn = vChannel.join()
+   VCconn = await vChannel.join()
 			.catch(console.error)  	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    })  	
