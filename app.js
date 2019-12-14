@@ -92,7 +92,7 @@ bot.on('message', async message => {
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	vChannel.join()			
 		.then(connection => { track(BotDate()+":wolf: play "+message.author.username+"   "+message.author.id);
-							  connection.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 1 });
+							  connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 1 });
 			})			
 		.catch(console.error); 	
   	 }
