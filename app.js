@@ -92,7 +92,8 @@ bot.on('message', async message => {
   if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3") ) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
-	VCconn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 1 });
+	//VCconn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 1 });
+	console.log(VCconn);
   
   	 }
 	
