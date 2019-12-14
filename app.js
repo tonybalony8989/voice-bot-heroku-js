@@ -15,7 +15,6 @@ bot.on('ready', async () => {      				// join the correct voice channel
    await vChannel.join()
 			.catch(console.error)  	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true);
-			//console.log(connection);
 			    }) 
 });
 
@@ -92,12 +91,10 @@ bot.on('message', async message => {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	vChannel.join()			
-		.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
+		.then(connection => { track(BotDate()+":wolf: play "+message.author.username+"   "+message.author.id);
+							  bPlay(connection, 'https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3');
 			})			
-		.catch(console.error); 
-	//VCconn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 1 });
-	console.log(VCconn);
-  
+		.catch(console.error); 	
   	 }
 	
 });
@@ -106,11 +103,8 @@ bot.on('message', async message => {
 process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 
 bot.login(process.env.TOKEN);
-
-
 //setup the setInterval here - 600s is 10minutes
 setInterval(intervalFunc,600000);
-
 
 function intervalFunc() {
 	if (lastChats >= chats) {
@@ -153,17 +147,26 @@ return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
 
 function BotConn(bConn, msgString, playSound) {
 	//console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
-	console.log(msgString);
+	//console.log(msgString);
 	  	bConn.voice.setSelfDeaf(true);
 		bConn.voice.setSelfMute(false);
 		setTimeout(function() {
 			bConn.voice.setSelfMute(true);
 			bConn.voice.setSelfDeaf(false);}, 2000)					
-		let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
-		trackChannel.send(BotDate()+msgString);
+		track(BotDate()+msgString);
 		if (playSound) {
 			//bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
-			bConn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.1 });
+			//bConn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.1 });
+			bPlay(bConn, 'https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3');
 			}		
 		//console.log(`OK status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
+}
+function bPlay (bConn, soundUrl) {	
+	bConn.play(soundUrl, { volume: 0.1 });
+}
+function track(testMsg) {
+	//send a message into the track channel
+	let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
+		trackChannel.send(testMsg);
+	console.log(testMsg);
 }
