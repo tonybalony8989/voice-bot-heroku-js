@@ -15,7 +15,7 @@ bot.on('ready', async () => {      				// join the correct voice channel
    await vChannel.join()
 			.catch(console.error)  	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true);
-			//VCconn=ClientVoiceManager.connections.last();
+			console.log(connection);
 			    })  	
 	console.log(VCconn);
 });
