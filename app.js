@@ -151,7 +151,8 @@ function BotConn(bConn, msgString, playSound) {
 		bConn.voice.setSelfMute(false);
 		setTimeout(function() {
 		//	bConn.voice.setSelfMute(true);
-		//	bConn.voice.setSelfDeaf(false);}, 2000)					
+		//	bConn.voice.setSelfDeaf(false);
+		}, 2000)					
 		track(BotDate()+msgString);
 		if (playSound) {
 			//bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });			
