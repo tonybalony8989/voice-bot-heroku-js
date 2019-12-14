@@ -12,7 +12,7 @@ var VCconn = null;
 
 bot.on('ready', () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
-   VCconn = vChannel.join()
+   await VCconn = vChannel.join()
 			.catch(console.error)  	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    })  	
@@ -82,14 +82,14 @@ bot.on('message', async message => {
 	vChannel.leave()
 	console.log('Left channel - Wait 5 seconds');
 	  setTimeout(function() {
-			VCconn = vChannel.join()			
+			await VCconn = vChannel.join()			
 				.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
 					})			
 				.catch(console.error);   
 				}, 5000);   
   	 }
 	//message.guild.ownerID === message.member.id
-  if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3") ) {
+  if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3")) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	//VCconn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 1 });
@@ -122,7 +122,7 @@ function intervalFunc() {
 			//console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
 			//use alternate function that doesn't play audio??
 			setTimeout(function() {
-				VCconn = vChannel.join()			
+				await VCconn = vChannel.join()			
 					.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
 						})			
 					.catch(console.error);   
