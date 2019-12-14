@@ -8,12 +8,13 @@ const bot = new Discord.Client();
 var chats = 1; //tracking chat occurances
 var lastChats = 0; //tracking of chat occurances
 var lastRejoin = new Date('2010/01/05 10:11:12');
+var VCconn = null;
 
 bot.on('ready', () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
-   vChannel.join()
-     	.catch(console.error)  	
-		.then(connection => { BotConn(connection, ":boom: new voice connection", true)
+   VCconn = vChannel.join()
+			.catch(console.error)  	
+			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    })  	
 });
 
@@ -81,14 +82,20 @@ bot.on('message', async message => {
 	vChannel.leave()
 	console.log('Left channel - Wait 5 seconds');
 	  setTimeout(function() {
-			vChannel.join()			
-			.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
-				})			
-			.catch(console.error);   
-			}, 5000);   
+			VCconn = vChannel.join()			
+				.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
+					})			
+				.catch(console.error);   
+				}, 5000);   
   	 }
 	//message.guild.ownerID === message.member.id
-
+  if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3") ) {
+  	// join the correct voice channel 	  
+	let vChannel = bot.channels.get(process.env.VCHANNEL); 
+	VCconn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 1 });
+  
+  	 }
+	
 });
 
 //catch promise errors
@@ -114,11 +121,11 @@ function intervalFunc() {
 			//console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
 			//use alternate function that doesn't play audio??
 			setTimeout(function() {
-				vChannel.join()			
-				.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
-					})			
-				.catch(console.error);   
-				}, 240000);
+				VCconn = vChannel.join()			
+					.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
+						})			
+					.catch(console.error);   
+					}, 240000);
 			lastRejoin=new Date();
 		}
 	}
