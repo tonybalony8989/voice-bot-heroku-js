@@ -8,7 +8,6 @@ const bot = new Discord.Client();
 var chats = 0; //tracking chat occurances
 var lastChats = 0; //tracking of chat occurances
 var lastRejoin = new Date('2010/01/05 10:11:12');
-var VCconn = null;
 
 bot.on('ready', async () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
@@ -23,7 +22,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	if (speaking.has(1)) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
-	console.log(speaking.FLAGS);
+	console.log(speaking.bitfield);
 	chats=chats+1;
 	}  
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
