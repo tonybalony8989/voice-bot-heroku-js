@@ -21,8 +21,10 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	//console.log(`${member.displayName} ${speaking.has(1)}`);
 	if (speaking.has(1)) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
-	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
-	console.log(speaking.bitfield);
+	let special="";
+	if (speaking.bitfield==5) { special=':mega:'}
+	hChannel.send(BotDate()+member.displayName+special+' 				`'+member.user.id+'` ');	
+	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
 	chats=chats+1;
 	}  
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
