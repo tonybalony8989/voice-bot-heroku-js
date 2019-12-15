@@ -108,7 +108,7 @@ bot.on('message', async message => {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => gMember.displayName);		
-		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ``${userNames.sort()}```);
+		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
 		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
 	} 	 
 });
