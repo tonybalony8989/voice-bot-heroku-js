@@ -23,7 +23,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	if (speaking.has(1)) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
-	//console.log(speaking.has(1)+' '+speaking.has(2)+' '+speaking.has(3)+' '+speaking.has(4)+' '+speaking.has(5)+' '+speaking.has(6)+' '+speaking.has(7)+' '+speaking.has(8)+' '+speaking.has(9)+' '+speaking.has(10)+' '+speaking.has(11)+' '+speaking.has(12)+' '+speaking.has(13)+' ');
+	console.log(speaking.FLAGS);
 	chats=chats+1;
 	}  
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
