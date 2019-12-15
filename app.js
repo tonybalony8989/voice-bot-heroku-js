@@ -10,7 +10,7 @@ var lastChats = 0; //tracking of chat occurances
 var lastRejoin = new Date('2010/01/05 10:11:12');
 
 bot.on('ready', async () => {      				// join the correct voice channel 
-  let vChannel = bot.channels.get(process.env.VCHANNEL);  
+  let vChannel = bot.channels.geat(process.env.VCHANNEL);  
    await vChannel.join()			 	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    }) 
@@ -24,7 +24,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	let special="";
 	if (speaking.bitfield==5) { special=" :loudspeaker:"; console.log('priority');}
 	hChannel.send(BotDate()+member.displayName+special+' 				`'+member.user.id+'` ');	
-	console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
+	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
 	chats=chats+1;
 	}  
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
