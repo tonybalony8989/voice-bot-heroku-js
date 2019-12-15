@@ -94,7 +94,7 @@ bot.on('message', async message => {
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	vChannel.join()			
 		.then(connection => { track(BotDate()+":wolf: play "+message.author.username+"   "+message.author.id);
-							  connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.05 });
+							  connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.3 });
 			})			
 		.catch(console.error); 	
   	 }
