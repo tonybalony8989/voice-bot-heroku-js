@@ -101,14 +101,14 @@ bot.on('message', async message => {
 			})			
 		.catch(console.error); 	
   	 }
-	if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
+/* 	if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
 		//track(BotDate()+":joystick: Test1 "+message.author.username+"   "+message.author.id);
 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => gMember.displayName);
 		//track(BotDate()+" "+userNames.length+" users. "+userNames)
 		message.channel.send(BotDate()+":joystick: "+userNames.length+" users. "+userNames.sort());
 		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort());	
-	}	
+	} */	
 });
 
 //catch promise errors
