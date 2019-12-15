@@ -104,7 +104,7 @@ process.on('unhandledRejection', error => console.error('Uncaught Promise Reject
 
 bot.login(process.env.TOKEN);
 //setup the setInterval here - 600s is 10minutes
-/* setInterval(intervalFunc,600000);
+ setInterval(intervalFunc,600000);
 
 function intervalFunc() {
 	if (lastChats >= chats) {
@@ -112,18 +112,24 @@ function intervalFunc() {
 		var newDate= new Date();
 		var diff= newDate-lastRejoin;
 		if (diff>1800000) {
-			//we have exceeded the cooldown timer (diff is in milliseconds, 1,800,000ms for 30min cooldown)
-			//do a leave and join, say the chats occurances into the trackchannel
-			let vChannel = bot.channels.get(process.env.VCHANNEL);
-			vChannel.leave();
-			//console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
-			//use alternate function that doesn't play audio??
-			setTimeout(function() {
-				vChannel.join()			
-					.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
-						})			
-					.catch(console.error);   
-					}, 240000);
+			let vChannel = bot.channels.get(process.env.VCHANNEL); 
+			vChannel.join()			
+				.then(connection => { track(BotDate()+":clock3: interval rejoin - no chats recently:"+chats);
+							  connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
+					})			
+				.catch(console.error);
+			/*			//we have exceeded the cooldown timer (diff is in milliseconds, 1,800,000ms for 30min cooldown)
+						//do a leave and join, say the chats occurances into the trackchannel
+						let vChannel = bot.channels.get(process.env.VCHANNEL);
+						vChannel.leave();
+						//console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
+
+						setTimeout(function() {
+							vChannel.join()			
+								.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
+									})			
+								.catch(console.error);   
+								}, 240000); */
 			lastRejoin=new Date();
 		}
 	}
@@ -131,7 +137,7 @@ function intervalFunc() {
 		console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);		
 	}
 	lastChats=chats; //track the current state	
-} */
+} 
 
 function BotDate() {
 	var d = new Date();
