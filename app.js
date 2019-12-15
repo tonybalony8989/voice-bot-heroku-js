@@ -102,11 +102,12 @@ bot.on('message', async message => {
 		.catch(console.error); 	
   	 }
 	if((message.content === "Test1") && ((message.member.roles.highest.name) == "Moderator3")) {
+		track(BotDate()+":joystick: Test1 "+message.author.username+"   "+message.author.id);
 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => gMember.displayName);
+		track(BotDate()+" "+userNames.length+" users. "+userNames)
 		console.log(BotDate()+"TEST1 "+message.author.username+"   "+message.author.id+" "+userNames);	
-	}
-	
+	}	
 });
 
 //catch promise errors
