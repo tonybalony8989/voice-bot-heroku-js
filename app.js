@@ -22,7 +22,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	if (speaking.has(1)) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	let special="";
-	if (speaking.bitfield==5) { special=" :loudspeaker:"; console.log('priority');}
+	if (speaking.bitfield==5) { special=" :loudspeaker:"; }
 	hChannel.send(BotDate()+member.displayName+special+' 				`'+member.user.id+'` ');	
 	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
 	chats=chats+1;
