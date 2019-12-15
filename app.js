@@ -93,7 +93,7 @@ bot.on('message', async message => {
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	vChannel.join()			
 		.then(connection => { track(BotDate()+":wolf: play "+message.author.username+"   "+message.author.id);
-							  connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
+							  connection.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.05 });
 			})			
 		.catch(console.error); 	
   	 }
@@ -109,16 +109,17 @@ bot.login(process.env.TOKEN);
 
 function intervalFunc() {
 	if (lastChats >= chats) {
-		//nothing has happened since last interval - take action
+		//nothing has happened since last interval - take action to repair the connection
 		var newDate= new Date();
 		var diff= newDate-lastRejoin;
 		if (diff>500000) { //less than the interval value and this isn't useful
 			let vChannel = bot.channels.get(process.env.VCHANNEL); 
 			vChannel.join()			
 				.then(connection => { track(BotDate()+":clock3: interval rejoin - no chats recently:"+chats);
-							  connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.05 });
+							  connection.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.05 });
 					})			
 				.catch(console.error);
+				//https://www.myinstants.com/media/sounds/erro.mp3
 			/*			//we have exceeded the cooldown timer (diff is in milliseconds, 1,800,000ms for 30min cooldown)
 						//do a leave and join, say the chats occurances into the trackchannel
 						let vChannel = bot.channels.get(process.env.VCHANNEL);
