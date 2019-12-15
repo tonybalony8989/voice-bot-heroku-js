@@ -101,12 +101,13 @@ bot.on('message', async message => {
 			})			
 		.catch(console.error); 	
   	 }
-	if((message.content === "Test1") && ((message.member.roles.highest.name) == "Moderator3")) {
-		track(BotDate()+":joystick: Test1 "+message.author.username+"   "+message.author.id);
+	if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
+		//track(BotDate()+":joystick: Test1 "+message.author.username+"   "+message.author.id);
 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => gMember.displayName);
-		track(BotDate()+" "+userNames.length+" users. "+userNames)
-		console.log(BotDate()+"TEST1 "+message.author.username+"   "+message.author.id+" "+userNames);	
+		//track(BotDate()+" "+userNames.length+" users. "+userNames)
+		message.channel.send(BotDate()+" "+userNames.length+" users. "+userNames.sort());
+		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort());	
 	}	
 });
 
@@ -118,12 +119,14 @@ bot.login(process.env.TOKEN);
  setInterval(intervalFunc,300000);
 
 function intervalFunc() {
-	if (lastChats >= chats) {
+	let vChannel = bot.channels.get(process.env.VCHANNEL); 
+	let userNames = vChannel.members.map(gMember => gMember.displayName);
+	let userCount = userNames.length; //this is 1 when empty (bot is counted).
+	if ((lastChats >= chats) && (userCount>=3)) { //no need to do anything if the server is empty
 		//nothing has happened since last interval - take action to repair the connection
 		var newDate = new Date();
 		var diff = newDate-lastRepair;
-		if (diff>600000) { //less than the interval value and this isn't useful
-			let vChannel = bot.channels.get(process.env.VCHANNEL); 
+		if (diff>600000) { //less than the interval value and this isn't useful			
 			vChannel.join()			
 				.then(connection => { //track(BotDate()+":clock3: interval repair - no chats recently:"+chats+' last chat'+lastChatDate());
 							  connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.05 });
