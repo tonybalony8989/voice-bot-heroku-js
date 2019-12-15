@@ -42,21 +42,23 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
   let hChannel = bot.channels.get(process.env.TCHANNEL);	
   let newName=null; let newID=null; let newUserChannel=null;
   let oldName=null; let oldID=null; let oldUserChannel=null;
-  
+  let botNote="";
   if (newState.channel != null) { //console.log("new");
 	newUserChannel = newState.channel.name;
 	newName = newState.member.displayName;
 	newID = newState.member.id;
+	if (newState.member.user.bot) {botNote=':robot:';}
   }
   if (oldState.channel !== null) { //console.log("old");
 	oldUserChannel = oldState.channel.name;
 	oldName = oldState.member.displayName;
 	oldID = oldState.member.id;    
+	if (oldState.member.user.bot) {botNote=':robot:';}
   }
 
   if (oldState.channel === null) {  	//user joined channel  		
-	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
-	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');	  
+	vlChannel.send(BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
+	hChannel.send(BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');	  
   	ttsChannel.send(newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
 		 	if (newState.member.roles.highest.name == "@everyone") {
 				trackChannel.send(BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
@@ -65,14 +67,14 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
   }
   else {		
 		if (newState.channel === null) {	//user left channel
-			vlChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
-			hChannel.send(BotDate()+oldName+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
+			vlChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
+			hChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
 			ttsChannel.send(oldName+' LEFT '+oldUserChannel.replace(/\s/g, '')+'', { tts: true});
 			}
 		else {	//user switched channel
 			if (newUserChannel != oldUserChannel) {
-				vlChannel.send(BotDate()+oldName+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
-				hChannel.send(BotDate()+oldName+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
+				vlChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
+				hChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
 				ttsChannel.send(oldName+' SWITCHED '+oldUserChannel.replace(/\s/g, '')+' to '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
 				//str = str.replace(/\s/g, '');
 				}
@@ -108,9 +110,10 @@ bot.on('message', async message => {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => {let base=gMember.displayName;
-														 let special="";
-														 if (gMember.user.bot) {special=' :robot:'}
-														 return base+special
+														 let prefix="";
+														 let suffix="";
+														 if (gMember.user.bot) {suffix=' :robot:'; prefix='[BOT->] ';}
+														 return prefix+base+suffix
 														});		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
 		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
