@@ -28,8 +28,11 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	if (speaking.bitfield==5) { special=" :loudspeaker:"; }
 	hChannel.send(BotDate()+member.displayName+special+' 				`'+member.user.id+'` ');	
 	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
+	if (chats==0) {  //first chat since the bot has started
+		track(BotDate()+"first chat received");
+	}
 	chats=chats+1;
-	lastChat=new Date();
+	lastChat=new Date();	
 	}  
 });
 
@@ -102,10 +105,10 @@ bot.on('message', async message => {
 		.catch(console.error); 	
   	 }
   if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
-	  console.log(message.channel);
+	  console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => gMember.displayName);		
-		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
+		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ``${userNames.sort()}```);
 		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
 	} 	 
 });
@@ -128,7 +131,7 @@ function intervalFunc() {
 		if (diff>600000) { //less than the interval value and this isn't useful			
 			vChannel.join()			
 				.then(connection => { //track(BotDate()+":clock3: interval repair - no chats recently:"+chats+' last chat'+lastChatDate());
-							  connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.05 });
+					 connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.05 });
 					})			
 				.catch(console.error);
 			lastRepair=new Date();
