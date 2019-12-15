@@ -7,7 +7,10 @@ const bot = new Discord.Client();
 //or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
 var chats = 0; //tracking chat occurances
 var lastChats = 0; //tracking of chat occurances
-var lastRejoin = new Date('2010/01/05 10:11:12');
+var repairTrack=0;
+var lastRepair = new Date('2010/01/05 10:11:12');
+var lastChat = new Date('1999/01/05 10:11:12');
+
 
 bot.on('ready', async () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
@@ -26,8 +29,8 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	hChannel.send(BotDate()+member.displayName+special+' 				`'+member.user.id+'` ');	
 	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
 	chats=chats+1;
+	lastChat=new Date();
 	}  
-	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
 });
 
 bot.on('voiceStateUpdate', (oldState, newState) =>{
@@ -111,35 +114,27 @@ bot.login(process.env.TOKEN);
 function intervalFunc() {
 	if (lastChats >= chats) {
 		//nothing has happened since last interval - take action to repair the connection
-		var newDate= new Date();
-		var diff= newDate-lastRejoin;
-		if (diff>500000) { //less than the interval value and this isn't useful
+		var newDate = new Date();
+		var diff = newDate-lastRepair;
+		if (diff>600000) { //less than the interval value and this isn't useful
 			let vChannel = bot.channels.get(process.env.VCHANNEL); 
 			vChannel.join()			
-				.then(connection => { track(BotDate()+":clock3: interval rejoin - no chats recently:"+chats);
+				.then(connection => { track(BotDate()+":clock3: interval repair - no chats recently:"+chats+' last chat'+lastChatDate());
 							  connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.05 });
 					})			
 				.catch(console.error);
-				//https://www.myinstants.com/media/sounds/erro.mp3
-			/*			//we have exceeded the cooldown timer (diff is in milliseconds, 1,800,000ms for 30min cooldown)
-						//do a leave and join, say the chats occurances into the trackchannel
-						let vChannel = bot.channels.get(process.env.VCHANNEL);
-						vChannel.leave();
-						//console.log('Interval Rejoin - Wait 2.5 seconds - chats:'+chats);
-
-						setTimeout(function() {
-							vChannel.join()			
-								.then(connection => { BotConn(connection, BotDate()+":clock3: interval rejoin - no chats recently:"+chats, true)
-									})			
-								.catch(console.error);   
-								}, 240000); */
-			lastRejoin=new Date();
+			lastRepair=new Date();
+			repairTrack++;
 		}
 	}
 	else {
-		console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);		
+		//console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);		
 	}
 	lastChats=chats; //track the current state	
+	if (repairTrack>=10) {
+		console.log(BotDate()+' repairs ongoing, last chat was ' + lastChat);
+		repairTrack=0;
+	}
 } 
 
 function BotDate() {
@@ -152,10 +147,18 @@ function BotDate() {
 	var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
 return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
 }
-
+function lastChatDate() {
+	var d = lastChat;
+	var year=String(d.getUTCFullYear());
+	var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
+	var day=String("0"+d.getUTCDate()).slice(-2);
+	var hour=String("0"+d.getUTCHours()).slice(-2);
+	var min=String("0"+d.getUTCMinutes()).slice(-2);
+	var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
+return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
+}
 function BotConn(bConn, msgString, playSound) {
 	//console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
-	//console.log(msgString);
 	  	bConn.voice.setSelfDeaf(false);
 		bConn.voice.setSelfMute(false);				
 		track(BotDate()+msgString);
@@ -167,11 +170,10 @@ function BotConn(bConn, msgString, playSound) {
 			bConn.voice.setSelfMute(true);
 			bConn.voice.setSelfDeaf(false);
 		}, 2000)				
-		//console.log(`OK status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 }
 function track(testMsg) {
 	//send a message into the track channel
 	let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
 		trackChannel.send(testMsg);
-	console.log(testMsg);
+	//console.log(testMsg);
 }
