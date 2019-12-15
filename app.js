@@ -105,7 +105,7 @@ bot.on('message', async message => {
 		.catch(console.error); 	
   	 }
   if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
-	  console.log(message.channel.name);
+	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => gMember.displayName);		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ``${userNames.sort()}```);
