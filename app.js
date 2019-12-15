@@ -132,7 +132,7 @@ function intervalFunc() {
 	}
 	lastChats=chats; //track the current state	
 	if (repairTrack>=10) {
-		console.log(BotDate()+' repairs ongoing, last chat was ' + lastChat);
+		console.log(BotDate()+' repairs ongoing, last chat was '+lastChatDate());
 		repairTrack=0;
 	}
 } 
