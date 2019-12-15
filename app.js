@@ -52,7 +52,7 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
 	oldID = oldState.member.id;    
   }
 
-  if (oldState.channel === null) {  	//user joined channel  	
+  if (oldState.channel === null) {  	//user joined channel  		
 	vlChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
 	hChannel.send(BotDate()+newName+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');	  
   	ttsChannel.send(newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
@@ -102,11 +102,11 @@ bot.on('message', async message => {
 		.catch(console.error); 	
   	 }
   if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
-	  console.log('snap');
-/* 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
+	  console.log(message.channel);
+ 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = vChannel.members.map(gMember => gMember.displayName);		
-		message.channel.send(BotDate()+":joystick: "+userNames.length+" users. "+userNames.sort());
-		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); */	
+		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
+		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
 	} 	 
 });
 
@@ -184,5 +184,4 @@ function track(testMsg) {
 	//send a message into the track channel
 	let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
 		trackChannel.send(testMsg);
-	//console.log(testMsg);
 }
