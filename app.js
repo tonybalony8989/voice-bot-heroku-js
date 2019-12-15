@@ -101,6 +101,10 @@ bot.on('message', async message => {
 			})			
 		.catch(console.error); 	
   	 }
+	if((message.content === "Test1") && ((message.member.roles.highest.name) == "Moderator3")) {
+	let vChannel = bot.channels.get(process.env.VCHANNEL); 
+	
+  	console.log(BotDate()+"TEST1 "+message.author.username+"   "+message.author.id+" "+vChannel.members);			
 	
 });
 
@@ -119,7 +123,7 @@ function intervalFunc() {
 		if (diff>600000) { //less than the interval value and this isn't useful
 			let vChannel = bot.channels.get(process.env.VCHANNEL); 
 			vChannel.join()			
-				.then(connection => { track(BotDate()+":clock3: interval repair - no chats recently:"+chats+' last chat'+lastChatDate());
+				.then(connection => { //track(BotDate()+":clock3: interval repair - no chats recently:"+chats+' last chat'+lastChatDate());
 							  connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.05 });
 					})			
 				.catch(console.error);
@@ -132,7 +136,8 @@ function intervalFunc() {
 	}
 	lastChats=chats; //track the current state	
 	if (repairTrack>=10) {
-		console.log(BotDate()+' repairs ongoing, last chat was '+lastChatDate());
+		console.log(BotDate()+'10x repairs, last chat was '+lastChatDate());
+		track(BotDate()+":clock3: 10x interval repairs - chats:"+chats+' last chat: '+lastChatDate());
 		repairTrack=0;
 	}
 } 
