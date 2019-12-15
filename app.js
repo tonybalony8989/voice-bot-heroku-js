@@ -11,7 +11,6 @@ var repairTrack=0;
 var lastRepair = new Date('2010/01/05 10:11:12');
 var lastChat = new Date('1999/01/05 10:11:12');
 
-
 bot.on('ready', async () => {      				// join the correct voice channel 
   let vChannel = bot.channels.get(process.env.VCHANNEL);  
    await vChannel.join()			 	
@@ -29,7 +28,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	hChannel.send(BotDate()+member.displayName+special+' 				`'+member.user.id+'` ');	
 	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
 	if (chats==0) {  //first chat since the bot has started
-		track(BotDate()+"first chat received");
+		track(BotDate()+":rainbow: first chat received");
 	}
 	chats=chats+1;
 	lastChat=new Date();	
@@ -62,6 +61,7 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
 		 	if (newState.member.roles.highest.name == "@everyone") {
 				trackChannel.send(BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
 		 	}		
+			if (newState.member.user.bot) { track(BotDate()+':robot: '+newName+'is a bot')}
   }
   else {		
 		if (newState.channel === null) {	//user left channel
@@ -107,12 +107,15 @@ bot.on('message', async message => {
   if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
-		let userNames = vChannel.members.map(gMember => gMember.displayName);		
+		let userNames = vChannel.members.map(gMember => {let base=gMember.displayName;
+														 let special="";
+														 if (gMember.user.bot) {special=' :robot:'}
+														 return base+special
+														});		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
 		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
 	} 	 
 });
-
 //catch promise errors
 process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 
