@@ -92,7 +92,7 @@ bot.on('message', async message => {
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	vChannel.join()			
 		.then(connection => { track(BotDate()+":wolf: play "+message.author.username+"   "+message.author.id);
-							  connection.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.05 });
+							  connection.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 0.05 });
 			})			
 		.catch(console.error); 	
   	 }
@@ -115,7 +115,7 @@ function intervalFunc() {
 			let vChannel = bot.channels.get(process.env.VCHANNEL); 
 			vChannel.join()			
 				.then(connection => { track(BotDate()+":clock3: interval rejoin - no chats recently:"+chats);
-							  connection.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.05 });
+							  connection.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 0.05 });
 					})			
 				.catch(console.error);
 				//https://www.myinstants.com/media/sounds/erro.mp3
@@ -163,7 +163,7 @@ function BotConn(bConn, msgString, playSound) {
 		track(BotDate()+msgString);
 		if (playSound) {
 			//bConn.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });			
-			bConn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone1.mp3', { volume: 0.1 });
+			bConn.play('https://github.com/tonybalony8989/voice-bot-heroku-js/blob/master/tone2.mp3', { volume: 0.05 });
 			}		
 		//console.log(`OK status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 }
