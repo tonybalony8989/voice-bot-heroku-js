@@ -104,7 +104,7 @@ process.on('unhandledRejection', error => console.error('Uncaught Promise Reject
 
 bot.login(process.env.TOKEN);
 //setup the setInterval here - 600s is 10minutes
-setInterval(intervalFunc,600000);
+/* setInterval(intervalFunc,600000);
 
 function intervalFunc() {
 	if (lastChats >= chats) {
@@ -131,7 +131,7 @@ function intervalFunc() {
 		console.log(BotDate()+' current chats:'+chats +' last chats:'+lastChats);		
 	}
 	lastChats=chats; //track the current state	
-}
+} */
 
 function BotDate() {
 	var d = new Date();
@@ -150,8 +150,8 @@ function BotConn(bConn, msgString, playSound) {
 	  	bConn.voice.setSelfDeaf(false);
 		bConn.voice.setSelfMute(false);
 		setTimeout(function() {
-		//	bConn.voice.setSelfMute(true);
-		//	bConn.voice.setSelfDeaf(false);
+			bConn.voice.setSelfMute(true);
+			bConn.voice.setSelfDeaf(false);
 		}, 2000)					
 		track(BotDate()+msgString);
 		if (playSound) {
