@@ -10,7 +10,7 @@ var lastChats = 0; //tracking of chat occurances
 var lastRejoin = new Date('2010/01/05 10:11:12');
 
 bot.on('ready', async () => {      				// join the correct voice channel 
-  let vChannel = bot.channels.geat(process.env.VCHANNEL);  
+  let vChannel = bot.channels.get(process.env.VCHANNEL);  
    await vChannel.join()			 	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    }) 
