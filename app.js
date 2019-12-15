@@ -5,7 +5,7 @@ const bot = new Discord.Client();
 //* https://github.com/jayzes/heroku-buildpack-ffmpeg
 //* https://github.com/codeinteger6/heroku-buildpack-libopus 
 //or https://github.com/Crazycatz00/heroku-buildpack-libopus.git
-var chats = 1; //tracking chat occurances
+var chats = 0; //tracking chat occurances
 var lastChats = 0; //tracking of chat occurances
 var lastRejoin = new Date('2010/01/05 10:11:12');
 var VCconn = null;
@@ -23,6 +23,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	if (speaking.has(1)) {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	hChannel.send(BotDate()+member.displayName+' 				`'+member.user.id+'` ');	
+	console.log(speaking.has(1)+' '+speaking.has(2)+' '+speaking.has(3)+' '+speaking.has(4)+' '+speaking.has(5)+' '+speaking.has(6)+' '+speaking.has(7)+' '+speaking.has(8)+' '+speaking.has(9)+' '+speaking.has(10)+' '+speaking.has(11)+' '+speaking.has(12)+' '+speaking.has(13)+' ');
 	chats=chats+1;
 	}  
 	//something to modify output when member.permissions.has(9) for priority speaker  :mega: or :loudspeaker:
@@ -103,15 +104,15 @@ bot.on('message', async message => {
 process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
 
 bot.login(process.env.TOKEN);
-//setup the setInterval here - 600s is 10minutes
- setInterval(intervalFunc,600000);
+//setup the setInterval here - 300s is 5minutes
+ setInterval(intervalFunc,300000);
 
 function intervalFunc() {
 	if (lastChats >= chats) {
 		//nothing has happened since last interval - take action
 		var newDate= new Date();
 		var diff= newDate-lastRejoin;
-		if (diff>1800000) {
+		if (diff>500000) { //less than the interval value and this isn't useful
 			let vChannel = bot.channels.get(process.env.VCHANNEL); 
 			vChannel.join()			
 				.then(connection => { track(BotDate()+":clock3: interval rejoin - no chats recently:"+chats);
