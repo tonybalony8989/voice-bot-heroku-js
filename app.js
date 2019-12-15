@@ -116,7 +116,7 @@ function intervalFunc() {
 			let vChannel = bot.channels.get(process.env.VCHANNEL); 
 			vChannel.join()			
 				.then(connection => { track(BotDate()+":clock3: interval rejoin - no chats recently:"+chats);
-							  connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.1 });
+							  connection.play('https://www.myinstants.com/media/sounds/erro.mp3', { volume: 0.05 });
 					})			
 				.catch(console.error);
 			/*			//we have exceeded the cooldown timer (diff is in milliseconds, 1,800,000ms for 30min cooldown)
