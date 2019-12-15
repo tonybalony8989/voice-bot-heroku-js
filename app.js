@@ -104,7 +104,7 @@ bot.on('message', async message => {
 	if((message.content === "Test1") && ((message.member.roles.highest.name) == "Moderator3")) {
 		let vChannel = bot.channels.get(process.env.VCHANNEL); 	
 	
-		console.log(BotDate()+"TEST1 "+message.author.username+"   "+message.author.id+" "+vChannel.members);	
+		console.log(BotDate()+"TEST1 "+message.author.username+"   "+message.author.id+" "+vChannel.members.length);	
 	}
 	
 });
