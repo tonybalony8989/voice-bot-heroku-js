@@ -112,7 +112,7 @@ bot.on('message', async message => {
 		let userNames = vChannel.members.map(gMember => {let base=gMember.displayName;
 														 let prefix="";
 														 let suffix="";
-														 if (gMember.user.bot) {suffix=' :robot:'; prefix='[BOT->] ';}
+														 if (gMember.user.bot) {suffix=' :robot:'; prefix=':robot: ';}
 														 return prefix+base+suffix
 														});		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
@@ -124,7 +124,7 @@ bot.on('message', async message => {
 		let userNames = vChannel.members.map(gMember => {if (gMember.roles.highest.name=="Moderator3") {return gMember.displayName;}
 														 return null
 														});		
-		message.channel.send(`${BotDate()}:jigsaw: ${userNames.sort()}`);
+		message.channel.send(`${BotDate()}:jigsaw: ${userNames.sort().filter(Boolean)}`);
 		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
 	}
 });
