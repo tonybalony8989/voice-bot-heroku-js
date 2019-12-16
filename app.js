@@ -63,7 +63,7 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
 		 	if (newState.member.roles.highest.name == "@everyone") {
 				trackChannel.send(BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
 		 	}		
-			if (newState.member.user.bot) { track(BotDate()+':robot: '+newName+'is a bot')}
+			if (newState.member.user.bot) { track(BotDate()+':robot: '+newName+' is a bot')}
   }
   else {		
 		if (newState.channel === null) {	//user left channel
@@ -116,8 +116,17 @@ bot.on('message', async message => {
 														 return prefix+base+suffix
 														});		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
-		console.log(BotDate()+"Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
-	} 	 
+		console.log(BotDate()+"!Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
+	}
+	if(message.content === "findmods") {
+	  //console.log(message.channel.name);
+ 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
+		let userNames = vChannel.members.map(gMember => {if (gMember.roles.highest.name=="Moderator3") {return gMember.displayName;}
+														 return null
+														});		
+		message.channel.send(`${BotDate()}:jigsaw: ${userNames.sort()}`);
+		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
+	}
 });
 //catch promise errors
 process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
