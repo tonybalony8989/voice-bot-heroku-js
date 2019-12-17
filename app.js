@@ -207,5 +207,7 @@ function getVCnames(channelID) {  //gets the names of a voice channel
 														 if (gMember.user.bot) {suffix=' :robot:'; prefix='';}
 														 return prefix+base+suffix
 														});	
-	return userNames.sort()
+		userNames=userNames.sort();
+		
+	return userNames
 }
