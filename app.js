@@ -86,7 +86,7 @@ bot.on('message', async message => {
   if(message.author.bot) return;	//only accept commands from within a guild (not DM or groupDM) message.member is null for the former two  
   if(message.member===null) {	//track dms somewhat
 						console.log(BotDate()+"DM from "+message.author.username+"   "+message.author.id);  		  
-						track(BotDate()+"DM from "+message.author.username+"   "+message.author.id);
+						track(BotDate()+":interrobang: DM from "+message.author.username+"   "+message.author.id);
 						return;}
   if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
   	// join the correct voice channel 	  
