@@ -127,8 +127,8 @@ bot.on('message', async message => {
 		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort().filter(Boolean)); 
 			// .filter(Boolean) is trimming 'falsy' type data eg. null, undefined, 0, ...		
 	}
-	 if (message.content=== "togglemute") && (message.guild.ownerID === message.member.id) {
-		 //get current guild
+	 if ((message.content=== "togglemute") && (message.guild.ownerID === message.member.id)) {
+		 //get a channel in the relevant guild, the guild itself, and then the relevant voice connection
 		 let vChannel = bot.channels.get(process.env.VCHANNEL);
 		 let Guild = vChannel.guild;
 		 let vConn = Guild.voice.connection;
