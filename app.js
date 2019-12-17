@@ -25,7 +25,8 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	let hChannel = bot.channels.get(process.env.TCHANNEL);	
 	let special="";
 	if (speaking.bitfield==5) { special=" :loudspeaker:"; }
-	hChannel.send(BotDate()+member.displayName+special+' 				`'+member.user.id+'` ');	
+	tChanSend(hChannel,BotDate()+member.displayName+special+' 				`'+member.user.id+'` ')
+		//.catch((e) => channel.send('an error occurred')).catch(console.log);
 	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
 	if (chats==0) {  //first chat since the bot has started
 		track(BotDate()+":rainbow: first chat received");
@@ -57,25 +58,25 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
   }
 
   if (oldState.channel === null) {  	//user joined channel  		
-	vlChannel.send(BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
-	hChannel.send(BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');	  
-  	ttsChannel.send(newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
+	tChanSend(vlChannel,BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
+	tChanSend(hChannel,BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');	  
+  	tChanSend(ttsChannel,newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
 		 	if (newState.member.roles.highest.name == "@everyone") {
-				trackChannel.send(BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
+				tChanSend(trackChannel,BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
 		 	}		
 			if (newState.member.user.bot) { track(BotDate()+':robot: '+newName+' is a bot')}
   }
   else {		
 		if (newState.channel === null) {	//user left channel
-			vlChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
-			hChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
-			ttsChannel.send(oldName+' LEFT '+oldUserChannel.replace(/\s/g, '')+'', { tts: true});
+			tChanSend(vlChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
+			tChanSend(hChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
+			tChanSend(ttsChannel,oldName+' LEFT '+oldUserChannel.replace(/\s/g, '')+'', { tts: true});
 			}
 		else {	//user switched channel
 			if (newUserChannel != oldUserChannel) {
-				vlChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
-				hChannel.send(BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
-				ttsChannel.send(oldName+' SWITCHED '+oldUserChannel.replace(/\s/g, '')+' to '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
+				tChanSend(vlChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
+				tChanSend(hChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
+				tChanSend(ttsChannel,oldName+' SWITCHED '+oldUserChannel.replace(/\s/g, '')+' to '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
 				//str = str.replace(/\s/g, '');
 				}
 			}
@@ -83,7 +84,10 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
 });
 bot.on('message', async message => {
   if(message.author.bot) return;	//only accept commands from within a guild (not DM or groupDM) message.member is null for the former two  
-  if(message.member===null) return;	//console.log(message.member);  		
+  if(message.member===null) {	
+						console.log(BotDate()+"DM from "+message.author.username+"   "+message.author.id);  		  
+						track(Botdate()+"DM from "+message.author.username+"   "+message.author.id);
+						return;}
   if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
@@ -106,17 +110,12 @@ bot.on('message', async message => {
 			})			
 		.catch(console.error); 	
   	 }
-  if((message.content === "Snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
+  if((message.content === "snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
-		let userNames = vChannel.members.map(gMember => {let base=gMember.displayName;
-														 let prefix="";
-														 let suffix="";
-														 if (gMember.user.bot) {suffix=' :robot:'; prefix=':robot: ';}
-														 return prefix+base+suffix
-														});		
+		let userNames = getVCnames(process.env.VCHANNEL);		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
-		console.log(BotDate()+"!Snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
+		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
 	}
 	if(message.content === "findmods") {
 	  //console.log(message.channel.name);
@@ -125,11 +124,11 @@ bot.on('message', async message => {
 														 return null
 														});		
 		message.channel.send(`${BotDate()}:jigsaw: ${userNames.sort().filter(Boolean)}`);
-		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
+		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort().filter(Boolean)); 	
 	}
 });
 //catch promise errors
-process.on('unhandledRejection', error => console.error('Uncaught Promise Rejection', error));
+process.on('unhandledRejection', error => console.error('Uh Oh, Uncaught Promise Rejection', error));
 
 bot.login(process.env.TOKEN);
 //setup the setInterval here - 300s is 5minutes
@@ -137,7 +136,7 @@ bot.login(process.env.TOKEN);
 
 function intervalFunc() {
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
-	let userNames = vChannel.members.map(gMember => gMember.displayName);
+	let userNames = getVCnames(process.env.VCHANNEL);
 	let userCount = userNames.length; //this is 1 when empty (bot is counted).
 	if ((lastChats >= chats) && (userCount>=3)) { //no need to do anything if the server is empty
 		//nothing has happened since last interval - take action to repair the connection
@@ -158,14 +157,15 @@ function intervalFunc() {
 	}
 	lastChats=chats; //track the current state	
 	if (repairTrack>=10) {
-		console.log(BotDate()+'10x repairs, last chat was '+lastChatDate());
-		track(BotDate()+":clock3: 10x interval repairs - chats:"+chats+' last chat: '+lastChatDate());
+		console.log(BotDate()+'10x repairs, last chat was '+BotDate(lastChat));
+		track(BotDate()+":clock3: 10x interval repairs - chats:"+chats+' last chat: '+BotDate(lastChat));
 		repairTrack=0;
 	}
 } 
 
-function BotDate() {
-	var d = new Date();
+function BotDate(dateVal) {  //date formatted in fixed width for discord. send nothing for current date
+	if (dateVal===undefined) {var d= new Date();}
+	else { var d = dateVal;}
 	var year=String(d.getUTCFullYear());
 	var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
 	var day=String("0"+d.getUTCDate()).slice(-2);
@@ -174,16 +174,7 @@ function BotDate() {
 	var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
 return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
 }
-function lastChatDate() {
-	var d = lastChat;
-	var year=String(d.getUTCFullYear());
-	var month=String("0"+(d.getUTCMonth()+1)).slice(-2);
-	var day=String("0"+d.getUTCDate()).slice(-2);
-	var hour=String("0"+d.getUTCHours()).slice(-2);
-	var min=String("0"+d.getUTCMinutes()).slice(-2);
-	var sec=String("0"+d.getUTCSeconds()).slice(-2); //[11:22:33]
-return('`'+year+'-'+month+'-'+day+' ['+hour+':'+min+':'+sec+'] `  ')
-}
+
 function BotConn(bConn, msgString, playSound) {
 	//console.log(`Connected status:${bConn.status} speaking:${bConn.speaking.has(1)} ch.name:${bConn.channel.name} selfDeaf:${bConn.voice.selfDeaf} mute:${bConn.voice.mute}`)
 	  	bConn.voice.setSelfDeaf(false);
@@ -200,6 +191,19 @@ function BotConn(bConn, msgString, playSound) {
 }
 function track(testMsg) {
 	//send a message into the track channel
-	let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);
+	let trackChannel = bot.channels.get(process.env.TRACKCHANNEL);  //don't use tChanSend here
 		trackChannel.send(testMsg);
+}
+function tChanSend(tChan, tMsg) { //try to catch some errors that intermitently show up as 'HTTPError'
+	tChan.send(tMsg).catch((e) => track(BotDate()+'a send error occurred')).catch(console.log);	
+}
+function getVCnames(channelID) {  //gets the names of a voice channel
+	 	let vChannel = bot.channels.get(channelID); 			
+		let userNames = vChannel.members.map(gMember => {let base=gMember.displayName;
+														 let prefix="";
+														 let suffix="";
+														 if (gMember.user.bot) {suffix=' :robot:'; prefix='';}
+														 return prefix+base+suffix
+														});	
+	return userNames
 }
