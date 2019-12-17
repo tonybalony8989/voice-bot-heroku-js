@@ -92,7 +92,7 @@ bot.on('message', async message => {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
 	vChannel.leave()
-	console.log('Left channel - Wait 5 seconds');
+	console.log("Left channel - Wait 5 seconds - rejoin request from "+message.author.username+"   "+message.author.id);
 	  setTimeout(function() {
 			vChannel.join()			
 				.then(connection => { BotConn(connection, BotDate()+":dizzy: rejoin request from "+message.author.username+"   "+message.author.id, true)
@@ -127,6 +127,20 @@ bot.on('message', async message => {
 		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort().filter(Boolean)); 
 			// .filter(Boolean) is trimming 'falsy' type data eg. null, undefined, 0, ...		
 	}
+	 if (message.content=== "togglemute") && (message.guild.ownerID === message.member.id) {
+		 //get current guild
+		 let vChannel = bot.channels.get(process.env.VCHANNEL);
+		 let Guild = vChannel.guild;
+		 let vConn = Guild.voice.connection;
+		 if (vConn.voice.mute) {
+			vConn.voice.setSelfMute(false);	
+			track(BotDate()+message.author.username+" togglemute :sound:");
+			}
+		 else {
+			 vConn.voice.setSelfMute(true);	
+			 track(BotDate()+message.author.username+"togglemute :mute:");
+		 }				
+	 }
 });
 //catch promise errors
 process.on('unhandledRejection', error => console.error('Uh Oh, Uncaught Promise Rejection', error));
