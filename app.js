@@ -115,7 +115,7 @@ bot.on('message', async message => {
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
-		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames.sort()); 	
+		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames); 	
 	}
 	if(message.content === "findmods") {
 	  //console.log(message.channel.name);
@@ -124,7 +124,8 @@ bot.on('message', async message => {
 														 return null
 														});		
 		message.channel.send(`${BotDate()}:jigsaw: ${userNames.sort().filter(Boolean)}`);
-		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort().filter(Boolean)); 	
+		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort().filter(Boolean)); 
+			// .filter(Boolean) is trimming 'falsy' type data eg. null, undefined, 0, ...		
 	}
 });
 //catch promise errors
@@ -157,8 +158,9 @@ function intervalFunc() {
 	}
 	lastChats=chats; //track the current state	
 	if (repairTrack>=10) {
+		let userNames = getVCnames(process.env.VCHANNEL);
 		console.log(BotDate()+'10x repairs, last chat was '+BotDate(lastChat));
-		track(BotDate()+":clock3: 10x interval repairs - chats:"+chats+' last chat: '+BotDate(lastChat));
+		track(BotDate()+":clock3: 10x interval repairs - chats:"+chats+' last chat: '+BotDate(lastChat)+' current users:'+userNames);
 		repairTrack=0;
 	}
 } 
@@ -205,5 +207,5 @@ function getVCnames(channelID) {  //gets the names of a voice channel
 														 if (gMember.user.bot) {suffix=' :robot:'; prefix='';}
 														 return prefix+base+suffix
 														});	
-	return userNames
+	return userNames.sort()
 }
