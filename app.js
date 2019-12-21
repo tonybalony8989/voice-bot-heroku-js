@@ -122,7 +122,7 @@ bot.on('message', async message => {
 		newMessage+='`'
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
-		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames); 	
+		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id); 	
 	}
 	if((message.content === "snapshot2") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
@@ -137,14 +137,14 @@ bot.on('message', async message => {
 		
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
-		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames); 	
+		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id); 	
 	}
 	if((message.content === "snapshot3") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
-		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id+" "+userNames); 	
+		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id); 	
 	}
 	if(message.content === "findmods") {
 	  //console.log(message.channel.name);
