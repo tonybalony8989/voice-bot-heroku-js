@@ -155,7 +155,7 @@ bot.on('message', async message => {
 			 track(BotDate()+message.author.username+" - togglemute :mute:");
 		 }				
 	 }
-		 if ((message.content=== "localeinfo") && (message.guild.ownerID === message.member.id)) {
+	if ((message.content=== "localeinfo") && (message.guild.ownerID === message.member.id)) {
 		 //get a channel in the relevant guild, the guild itself, and then the relevant voice connection
 		 let vChannel = bot.channels.get(process.env.VCHANNEL);
 		 let Guild = vChannel.guild;
@@ -164,7 +164,7 @@ bot.on('message', async message => {
 		 let outputs = memberList.map(gMember => {return gMember.user.locale });		 
 		track(BotDate()+" locales:"+outputs);
 //UNTESTED
-		}
+		
 	 }
 	 
 
