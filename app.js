@@ -128,8 +128,9 @@ bot.on('message', async message => {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 
 		let userNames = getVCnames(process.env.VCHANNEL);		
-		let memberList = vChannel.members;
+		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
+		
 		for (i = 0; i < memberList.length; i++) {
 			newMessage+='`'+memberList[i].displayName+'` <@'+memberList[i].id+'>\n';
 			}
