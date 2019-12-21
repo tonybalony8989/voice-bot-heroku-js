@@ -114,7 +114,7 @@ bot.on('message', async message => {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
-		let message=BotDate()+':joystick: ' +userNames.length+'\n';
+		let newMessage=BotDate()+':joystick: ' +userNames.length+'\n';
 		newMessage+='`'
 		for (i = 0; i < userNames.length; i++) {
 			newMessage+=userNames[i]
