@@ -143,7 +143,7 @@ bot.on('message', async message => {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
-		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
+		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames}`);
 		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id); 	
 	}
 	if(message.content === "findmods") {
@@ -152,7 +152,7 @@ bot.on('message', async message => {
 		let userNames = vChannel.members.map(gMember => {if (gMember.roles.highest.name=="Moderator3") {return gMember.displayName;}
 														 return null
 														});		
-		message.channel.send(`${BotDate()}:jigsaw: ${userNames.sort().filter(Boolean)}`);
+		message.channel.send(`${BotDate()}:jigsaw: ${userNames.filter(Boolean)}`);
 		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort().filter(Boolean)); 
 			// .filter(Boolean) is trimming 'falsy' type data eg. null, undefined, 0, ...		
 	}
