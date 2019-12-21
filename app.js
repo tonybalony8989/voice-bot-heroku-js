@@ -114,8 +114,22 @@ bot.on('message', async message => {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
-		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
+		let message=BotDate()+':joystick: ' +userNames.length+'\n';
+		newMessage+='`'
+		for (i = 0; i < userNames.length; i++) {
+			newMessage+=userNames[i]
+			}
+		newMessage+='`'
+		message.channel.send(newMessage)
+		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames); 	
+	}
+	if((message.content === "snapshot2") && ((message.member.roles.highest.name) != "@everyone")) {
+	  //console.log(message.channel.name);
+ 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
+		let userNames = getVCnames(process.env.VCHANNEL);		
+		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);
+		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id+" "+userNames); 	
 	}
 	if(message.content === "findmods") {
 	  //console.log(message.channel.name);
@@ -134,13 +148,27 @@ bot.on('message', async message => {
 		 let vConn = Guild.voice.connection;
 		 if (vConn.voice.mute) {
 			vConn.voice.setSelfMute(false);	
-			track(BotDate()+message.author.username+" togglemute :sound:");
+			track(BotDate()+message.author.username+" - togglemute :sound:");
 			}
 		 else {
 			 vConn.voice.setSelfMute(true);	
-			 track(BotDate()+message.author.username+"togglemute :mute:");
+			 track(BotDate()+message.author.username+" - togglemute :mute:");
 		 }				
 	 }
+		 if ((message.content=== "localeinfo") && (message.guild.ownerID === message.member.id)) {
+		 //get a channel in the relevant guild, the guild itself, and then the relevant voice connection
+		 let vChannel = bot.channels.get(process.env.VCHANNEL);
+		 let Guild = vChannel.guild;
+		 //let memberList = Guild.members;   //this is the memberlist for the entire guild
+		 let memberList=vChannel.members;  //this is the member list of the primary voice channel
+		 let outputs = memberList.map(gMember => {return gMember.user.locale });		 
+		track(BotDate()+" locales:"+outputs);
+//UNTESTED
+		}
+	 }
+	 
+
+
 });
 //catch promise errors
 process.on('unhandledRejection', error => console.error('Uh Oh, Uncaught Promise Rejection', error));
