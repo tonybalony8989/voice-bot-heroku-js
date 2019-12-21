@@ -270,6 +270,9 @@ function getVCnames(channelID) {  //gets the names of a voice channel
 }
 function getVCusers(channelID) {  //gets the names of a voice channel
 	 	let vChannel = bot.channels.get(channelID); 			
-		let userNames = vChannel.members.map(gMember => {return gMember.user});			
+		let userNames = vChannel.members.map(gMember => {return gMember.user});	
+		userNames=userNames.sort(function (a, b) {
+				return a.toLowerCase().localeCompare(b.toLowerCase());
+				});
 	return userNames
 }
