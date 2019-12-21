@@ -114,10 +114,10 @@ bot.on('message', async message => {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
-		let newMessage=BotDate()+':joystick: ' +userNames.length+'\n';
+		let newMessage=BotDate()+vChannel.name+' :joystick: ' +userNames.length+' voice users\n';
 		newMessage+='`'
 		for (i = 0; i < userNames.length; i++) {
-			newMessage+=userNames[i]
+			newMessage+=userNames[i]+'\n';
 			}
 		newMessage+='`'
 		message.channel.send(newMessage)
@@ -125,6 +125,19 @@ bot.on('message', async message => {
 		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames); 	
 	}
 	if((message.content === "snapshot2") && ((message.member.roles.highest.name) != "@everyone")) {
+	  //console.log(message.channel.name);
+ 		let vChannel = bot.channels.get(process.env.VCHANNEL); 					
+		let memberList = vChannel.members;
+		let newMessage=BotDate()+vChannel.name+' :joystick: ' +userNames.length+' voice users\n';		
+		for (i = 0; i < userNames.length; i++) {
+			newMessage+='`'+memberList[i].displayName+'` <@'+memberList[i].id+'>\n';
+			}
+		
+		message.channel.send(newMessage)
+		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
+		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id+" "+userNames); 	
+	}
+	if((message.content === "snapshot3") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
@@ -251,5 +264,10 @@ function getVCnames(channelID) {  //gets the names of a voice channel
 														});	
 		userNames=userNames.sort();
 		
+	return userNames
+}
+function getVCusers(channelID) {  //gets the names of a voice channel
+	 	let vChannel = bot.channels.get(channelID); 			
+		let userNames = vChannel.members.map(gMember => {return gMember.user});			
 	return userNames
 }
