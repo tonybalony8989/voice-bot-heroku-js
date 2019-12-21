@@ -126,7 +126,8 @@ bot.on('message', async message => {
 	}
 	if((message.content === "snapshot2") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
- 		let vChannel = bot.channels.get(process.env.VCHANNEL); 					
+ 		let vChannel = bot.channels.get(process.env.VCHANNEL); 
+		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members;
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
 		for (i = 0; i < memberList.length; i++) {
