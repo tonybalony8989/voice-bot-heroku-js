@@ -132,7 +132,7 @@ bot.on('message', async message => {
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
 		
 		for (i = 0; i < memberList.length; i++) {
-			newMessage+='`'+memberList[i].displayName+'` <@'+memberList[i].id+'>\n';
+			newMessage+='` <@'+memberList[i].id+'>\n';
 			}
 		
 		message.channel.send(newMessage)
