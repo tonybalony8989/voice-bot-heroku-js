@@ -190,10 +190,9 @@ bot.on('message', async message => {
 			//check clientStatus (web, mobile, desktop. as keys)
 			let temp='.';
 			let acti=memberList[i].presence.activity;
-			if (acti!==null){temp='something';
-					if (acti.details!==null) {temp='name:'+acti.name+' type:'+acti.type+' details:'+acti.details;
-						if (acti.url!==null) {temp+=' url:'+acti.url;}
-						}	
+			if (acti!==null){temp='name:'+acti.name+' type:'+acti.type;
+					if (acti.details!==null) {temp+=' details:'+acti.details;}
+					if (acti.url!==null) {temp+=' url:'+acti.url;}	
 				newMessage+=memberList[i].displayName+' '+temp+' \n';
 				}
 			}
