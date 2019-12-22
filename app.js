@@ -284,8 +284,7 @@ bot.on('message', async message => {
 			if (acti!==null){tempActi='name:'+acti.name+' type:'+acti.type;
 					if (acti.details!==null) {tempActi+=' details:'+acti.details;}
 					if (acti.url!==null) {tempActi+=' url:'+acti.url;}					
-					if (acti.state!==null) {tempActi+=' state:'+acti.state;}
-					if (acti.assets.smallText!==null) {tempActi+=' assets:'+acti.assets.smallText;}
+					if (acti.state!==null) {tempActi+=' state:'+acti.state;}					
 				}
 			newMessage+=memberList[i].displayName+' '+memberList[i].id+' '+temp+' '+mStat+' '+tempActi+'\n';
 			
@@ -406,6 +405,6 @@ function sendLong(vChan, tMsg, charLimit, prefix, suffix) {  //used to send mess
 			}
     }	
 	//send the remnant if any
-	temp+="\nEnd";
+	
 	if (temp.length!=0) {vChan.send(temp);}
 }
