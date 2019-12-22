@@ -190,7 +190,7 @@ bot.on('message', async message => {
 			//check clientStatus
 			let temp='no';
 			if (memberList[i].presence.clientStatus!==null) {
-				temp=memberList[i].presence.clientStatus.toString();
+				temp=Object.values(memberList[i].presence.clientStatus);
 				}
 			newMessage+=memberList[i].displayName+' '+temp+' '+memberList[i].presence.status+'\n';
 			}
