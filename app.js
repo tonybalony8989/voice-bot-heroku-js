@@ -187,7 +187,7 @@ bot.on('message', async message => {
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
 		newMessage+='`';
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
-			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus.values()+' '+memberList[i].presence.status+'\n';
+			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus.web+' '+memberList[i].presence.status+'\n';
 			}
 		newMessage+='`';
 		message.channel.send(newMessage)
@@ -271,11 +271,11 @@ function tChanSend(tChan, tMsg) { //try to catch some errors that intermitently 
 function getVCnames(channelID) {  //gets the names of a voice channel
 	 	let vChannel = bot.channels.get(channelID); 			
 		let userNames = vChannel.members.map(gMember => {let base=gMember.displayName;
-														 let prefix="";
-														 let suffix="";
-														 if (gMember.user.bot) {suffix=' :robot:'; prefix='';}
-														 return prefix+base+suffix
-														});	
+					 let prefix="";
+					 let suffix="";
+					 if (gMember.user.bot) {suffix=' :robot:'; prefix='';}
+					 return prefix+base+suffix
+					});	
 		userNames=userNames.sort(function (a, b) {
 				return a.toLowerCase().localeCompare(b.toLowerCase());
 				});		
