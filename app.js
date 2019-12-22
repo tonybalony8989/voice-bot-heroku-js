@@ -126,10 +126,12 @@ bot.on('message', async message => {
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';			
+		newMessage+='`';
 		for (i = 0; i < memberList.length; i++) {
 			newMessage+=memberList[i].displayName+' '+memberList[i].id+'\n';
-			}					
-		sendLong(message.channel, newMessage, 2000,'','');
+			}
+		newMessage+='`';			
+		sendLong(message.channel, newMessage, 2000,'`','`');
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"showvoice2 "+message.author.username+"   "+message.author.id); 	
 	}
@@ -216,7 +218,6 @@ bot.on('message', async message => {
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage="";		
 		newMessage+='`';
-		let afk_count=0;
 		for (i = 0; i < memberList.length; i++) {   
 			let mStat=memberList[i].presence.status;			
 			let temp='[Unknown]';			
@@ -230,8 +231,7 @@ bot.on('message', async message => {
 			
 		}
 		newMessage+='`';
-		if (afk_count==0) {newMessage='';}
-		newMessage=BotDate()+vChannel.name+' :joystick: '+afk_count+'/'+memberList.length+' voice users are AFK (status not online)\n'+newMessage;
+		newMessage=BotDate()+vChannel.name+' :joystick: '+memberList.length+' voice users\n'+newMessage;
 		sendLong(message.channel, newMessage, 2000,'`','`');
 		//message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
