@@ -88,7 +88,7 @@ bot.on('message', async message => {
 						console.log(BotDate()+"DM from "+message.author.username+"   "+message.author.id);  		  
 						track(BotDate()+":interrobang: DM from "+message.author.username+"   "+message.author.id);
 						return;}
-  if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
+	if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL);  
 	vChannel.leave()
@@ -101,7 +101,7 @@ bot.on('message', async message => {
 				}, 5000);   
   	 }
 	//message.guild.ownerID === message.member.id
-  if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3")) {
+	if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3")) {
   	// join the correct voice channel 	  
 	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	vChannel.join()			
@@ -110,7 +110,7 @@ bot.on('message', async message => {
 			})			
 		.catch(console.error); 	
   	 }
-  if((message.content === "snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
+	if((message.content === "snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
 		let userNames = getVCnames(process.env.VCHANNEL);		
@@ -156,7 +156,7 @@ bot.on('message', async message => {
 		console.log(BotDate()+"findmods "+message.author.username+"   "+message.author.id+" "+userNames.sort().filter(Boolean)); 
 			// .filter(Boolean) is trimming 'falsy' type data eg. null, undefined, 0, ...		
 	}
-	 if ((message.content=== "togglemute") && (message.guild.ownerID === message.member.id)) {
+	if ((message.content=== "togglemute") && (message.guild.ownerID === message.member.id)) {
 		 //get a channel in the relevant guild, the guild itself, and then the relevant voice connection
 		 let vChannel = bot.channels.get(process.env.VCHANNEL);
 		 let Guild = vChannel.guild;
@@ -176,12 +176,24 @@ bot.on('message', async message => {
 		 let Guild = vChannel.guild;
 		 //let memberList = Guild.members;   //this is the memberlist for the entire guild
 		 let memberList=vChannel.members;  //this is the member list of the primary voice channel
-		 let outputs = memberList.map(gMember => {return gMember.user.locale });		 
-		track(BotDate()+" locales:"+outputs);
-//UNTESTED
-		
+		 let outputs = memberList.map(gMember => {return gMember.user.locale }); //returns blank it seems
+		track(BotDate()+" locales:"+outputs);  
 	 }
-	 
+	if((message.content === "test99") && (message.guild.ownerID === message.member.id)) {
+	  //console.log(message.channel.name);
+ 		let vChannel = bot.channels.get(process.env.VCHANNEL); 
+		let userNames = getVCnames(process.env.VCHANNEL);		
+		let memberList = vChannel.members.map(gMember=>{return gMember});
+		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
+		
+		for (i = 0; i < memberList.length; i++) {
+			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus+' '+memberList[i].status+'\n';
+			}
+		
+		message.channel.send(newMessage)
+		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
+		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id); 	
+	} 
 
 
 });
@@ -271,7 +283,6 @@ function getVCnames(channelID) {  //gets the names of a voice channel
 }
 function getVCusers(channelID) {  //gets the names of a voice channel
 	 	let vChannel = bot.channels.get(channelID); 			
-		let userNames = vChannel.members.map(gMember => {return gMember.user});	
-		
+		let userNames = vChannel.members.map(gMember => {return gMember.user});			
 	return userNames
 }
