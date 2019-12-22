@@ -191,9 +191,11 @@ bot.on('message', async message => {
 			let temp='.';
 			let acti=memberList[i].presence.activity;
 			if (acti!==null){temp='something';
-				if (acti.details!==null) {temp=acti.details+' x';}				
-			}				
-			newMessage+=memberList[i].displayName+' '+temp+' '+memberList[i].presence.status+'\n';
+					if (acti.details!==null) {temp='name:'+acti.name+' type:'+acti.type+' details:'+acti.details;
+						if (acti.url!==null) {temp+=' url:'+acti.url;}
+						}	
+				newMessage+=memberList[i].displayName+' '+temp+' \n';
+				}
 			}
 		newMessage+='`';
 		message.channel.send(newMessage)
@@ -223,7 +225,7 @@ bot.on('message', async message => {
 			}
 		}
 		newMessage+='`';
-		newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users, '+afk_count+'AFK - members not status:online\n'+newMessage;
+		newMessage=BotDate()+vChannel.name+' :joystick: ' afk_count+'/'+memberList.length+' voice users are AFK (status not online)\n'+newMessage;
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"showafk "+message.author.username+"   "+message.author.id); 	
