@@ -88,9 +88,10 @@ bot.on('message', async message => {
 						console.log(BotDate()+"DM from "+message.author.username+"   "+message.author.id);  		  
 						track(BotDate()+":interrobang: DM from "+message.author.username+"   "+message.author.id);
 						return;}
+	let vChannel = bot.channels.get(process.env.VCHANNEL); //used throughout this event
+	let Guild = vChannel.guild; //common object 
 	if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
-  	// join the correct voice channel 	  
-	let vChannel = bot.channels.get(process.env.VCHANNEL);  
+  	// join the correct voice channel 	  	
 	vChannel.leave()
 	console.log("Left channel - Wait 5 seconds - rejoin request from "+message.author.username+"   "+message.author.id);
 	  setTimeout(function() {
@@ -103,16 +104,13 @@ bot.on('message', async message => {
 	//message.guild.ownerID === message.member.id
 	if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3")) {
   	// join the correct voice channel 	  
-	let vChannel = bot.channels.get(process.env.VCHANNEL); 
 	vChannel.join()			
 		.then(connection => { track(BotDate()+":wolf: play "+message.author.username+"   "+message.author.id);
 							  connection.play('https://raw.githubusercontent.com/tonybalony8989/voice-bot-heroku-js/master/tone2.mp3', { volume: 0.3 });
 			})			
 		.catch(console.error); 	
   	 }
-	if((message.content === "snapshot") && ((message.member.roles.highest.name) != "@everyone")) {
-	  //console.log(message.channel.name);
- 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
+	if((message.content === "snapshot") && ((message.member.roles.highest.name) != "@everyone")) {	
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +userNames.length+' voice users\n';
 		newMessage+='`'
@@ -120,35 +118,26 @@ bot.on('message', async message => {
 			newMessage+=userNames[i]+'\n';
 			}
 		newMessage+='`'
-		message.channel.send(newMessage)
-		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
+		message.channel.send(newMessage)		
 		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id); 	
 	}
 	if((message.content === "snapshot2") && ((message.member.roles.highest.name) != "@everyone")) {
-	  //console.log(message.channel.name);
- 		let vChannel = bot.channels.get(process.env.VCHANNEL); 
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
-		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
-		
+		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';			
 		for (i = 0; i < memberList.length; i++) {
 			newMessage+='<@'+memberList[i].id+'>\n';
-			}
-		
-		message.channel.send(newMessage)
+			}		
+		sendLong(message.channel, newMessage, 2000);
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id); 	
 	}
-	if((message.content === "snapshot3") && ((message.member.roles.highest.name) != "@everyone")) {
-	  //console.log(message.channel.name);
- 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
+	if((message.content === "snapshot3") && ((message.member.roles.highest.name) != "@everyone")) {			
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames}`);
 		console.log(BotDate()+"snapshot3 "+message.author.username+"   "+message.author.id); 	
 	}
-	if(message.content === "findmods") {
-	  //console.log(message.channel.name);
- 		let vChannel = bot.channels.get(process.env.VCHANNEL); 			
+	if(message.content === "findmods") {		
 		let userNames = vChannel.members.map(gMember => {if (gMember.roles.highest.name=="Moderator3") {return gMember.displayName;}
 														 return null
 														});		
@@ -158,8 +147,6 @@ bot.on('message', async message => {
 	}
 	if ((message.content=== "togglemute") && (message.guild.ownerID === message.member.id)) {
 		 //get a channel in the relevant guild, the guild itself, and then the relevant voice connection
-		 let vChannel = bot.channels.get(process.env.VCHANNEL);
-		 let Guild = vChannel.guild;
 		 let vConn = Guild.voice.connection;
 		 if (vConn.voice.mute) {
 			vConn.voice.setSelfMute(false);	
@@ -172,22 +159,17 @@ bot.on('message', async message => {
 	 }
 	if ((message.content=== "localeinfo") && (message.guild.ownerID === message.member.id)) {
 		 //get a channel in the relevant guild, the guild itself, and then the relevant voice connection
-		 let vChannel = bot.channels.get(process.env.VCHANNEL);
-		 let Guild = vChannel.guild;
 		 //let memberList = Guild.members;   //this is the memberlist for the entire guild
 		 let memberList=vChannel.members;  //this is the member list of the primary voice channel
 		 let outputs = memberList.map(gMember => {return gMember.user.locale }); //returns blank it seems
 		track(BotDate()+" locales:"+outputs);  
 	 }
-	if((message.content === "activitycheck") && ((message.member.roles.highest.name) != "@everyone")) {
-	  //console.log(message.channel.name);
- 		let vChannel = bot.channels.get(process.env.VCHANNEL); 
+	if((message.content === "showactivity") && ((message.member.roles.highest.name) != "@everyone")) {
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users - activity check\n';		
 		newMessage+='`';		
-		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
-			//check clientStatus (web, mobile, desktop. as keys)
+		for (i = 0; i < memberList.length; i++) {   
 			let temp='.';
 			let acti=memberList[i].presence.activity;
 			if (acti!==null){temp='name:'+acti.name+' type:'+acti.type;
@@ -197,40 +179,36 @@ bot.on('message', async message => {
 				}
 			}
 		newMessage+='`';
-		message.channel.send(newMessage)
-		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
-		console.log(BotDate()+"activitycheck "+message.author.username+"   "+message.author.id); 	
+		message.channel.send(newMessage)	
+		console.log(BotDate()+"showactivity "+message.author.username+"   "+message.author.id); 	
 	}  
 	if((message.content === "showafk") && ((message.member.roles.highest.name) != "@everyone")) {
-	  //console.log(message.channel.name);
- 		let vChannel = bot.channels.get(process.env.VCHANNEL); 
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage="";		
 		newMessage+='`';
 		let afk_count=0;
-		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
+		for (i = 0; i < memberList.length; i++) {   
 			let mStat=memberList[i].presence.status;
 			if (mStat!="online") { afk_count++;
-			//check clientStatus (web, mobile, desktop. as keys)
-			let temp='UNK';			
+			let temp='-Unknown-';			
 			let pres=memberList[i].presence.clientStatus;			
 			if (pres!==null){
-				if (pres.web!==null) {temp='w';}
-				if (pres.mobile!==null) {temp='MOB';}
+				if (pres.web!==null) {temp='Web';}
+				if (pres.mobile!==null) {temp='Mobile';}
 				if (pres.desktop!==null) {temp='d';}
 			}				
 			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+'\n';
 			}
 		}
 		newMessage+='`';
+		if (afk_count==0) {newMessage='';}
 		newMessage=BotDate()+vChannel.name+' :joystick: '+afk_count+'/'+memberList.length+' voice users are AFK (status not online)\n'+newMessage;
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"showafk "+message.author.username+"   "+message.author.id); 	
 	} 
-
-/*     online - user is online
+/*  online - user is online
     idle - user is AFK
     dnd - user is in Do Not Disturb */
 
@@ -238,8 +216,6 @@ bot.on('message', async message => {
     idle - user is AFK
     offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
-
-
 });
 //catch promise errors
 process.on('unhandledRejection', error => console.error('Uh Oh, Uncaught Promise Rejection', error));
@@ -329,4 +305,16 @@ function getVCusers(channelID) {  //gets the names of a voice channel
 	 	let vChannel = bot.channels.get(channelID); 			
 		let userNames = vChannel.members.map(gMember => {return gMember.user});			
 	return userNames
+}
+function sendLong(vChan, tMsg, charLimit) {  //used to send messages with long contents. 
+	let splitChar="\n";
+	let array=tMsg.split(splitChar);  //split the string on newlines
+    let temp='';
+    for (i=0;i<array.length;i++) {
+    	if ((temp+array[i]).length<=charLimit) {temp+=array[i]+splitChar;}
+        else {
+			vChan.send(temp);
+			temp=array[i]+splitChar;
+			}
+    }	
 }
