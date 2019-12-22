@@ -307,6 +307,7 @@ function getVCusers(channelID) {  //gets the names of a voice channel
 	return userNames
 }
 function sendLong(vChan, tMsg, charLimit) {  //used to send messages with long contents. 
+	console.log(vChan.name+' ' +tMsg+' ' +charLimit)
 	let splitChar="\n";
 	let array=tMsg.split(splitChar);  //split the string on newlines
     let temp='';
