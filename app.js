@@ -185,15 +185,15 @@ bot.on('message', async message => {
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
-		newMessage+='`';
+		newMessage+='`';		
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
 			//check clientStatus (web, mobile, desktop. as keys)
 			let temp='unknown';
 			let pres=memberList[i].presence.clientStatus;
 			if (pres!==null){
-				if (pres.web!==null) {temp='web';}
-				if (pres.mobile!==null) {temp='mobile';}
-				if (pres.desktop!==null) {temp='desktop';}
+				if (pres.web!==null) {temp='W';}
+				if (pres.mobile!==null) {temp='M';}
+				if (pres.desktop!==null) {temp='d';}
 			}
 				
 			newMessage+=memberList[i].displayName+' '+temp+' '+memberList[i].presence.status+'\n';
@@ -202,10 +202,43 @@ bot.on('message', async message => {
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"test99 "+message.author.username+"   "+message.author.id); 	
+	}  
+	if((message.content === "showafk") && ((message.member.roles.highest.name) != "@everyone")) {
+	  //console.log(message.channel.name);
+ 		let vChannel = bot.channels.get(process.env.VCHANNEL); 
+		let userNames = getVCnames(process.env.VCHANNEL);		
+		let memberList = vChannel.members.map(gMember=>{return gMember});
+		let newMessage=""";		
+		newMessage+='`';
+		let afk_count=0;
+		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
+			let mStat=memberList[i].presence.status;
+			if (mStat!="online") { afk_count++;
+			//check clientStatus (web, mobile, desktop. as keys)
+			let temp='UNK';			
+			let pres=memberList[i].presence.clientStatus;			
+			if (pres!==null){
+				if (pres.web!==null) {temp='w';}
+				if (pres.mobile!==null) {temp='MOB';}
+				if (pres.desktop!==null) {temp='d';}
+			}				
+			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+'\n';
+			}
+		}
+		newMessage+='`';
+		newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users, '+afk_count+'AFK\n'+newMessage;
+		message.channel.send(newMessage)
+		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
+		console.log(BotDate()+"showafk "+message.author.username+"   "+message.author.id); 	
 	} 
 
 /*     online - user is online
     idle - user is AFK
+    dnd - user is in Do Not Disturb */
+
+/*  online - user is online
+    idle - user is AFK
+    offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
 
 
