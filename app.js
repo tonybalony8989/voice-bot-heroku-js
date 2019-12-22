@@ -187,13 +187,17 @@ bot.on('message', async message => {
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
 		newMessage+='`';
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
-			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus.web+' '+memberList[i].presence.status+'\n';
+			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus+' '+memberList[i].presence.status+'\n';
 			}
 		newMessage+='`';
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"test99 "+message.author.username+"   "+message.author.id); 	
 	} 
+
+/*     online - user is online
+    idle - user is AFK
+    dnd - user is in Do Not Disturb */
 
 
 });
