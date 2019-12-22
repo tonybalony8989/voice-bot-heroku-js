@@ -237,7 +237,7 @@ bot.on('message', async message => {
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"showstatus "+message.author.username+"   "+message.author.id); 	
 	} 
-	if((message.content === "showbloat") && (message.guild.ownerID === message.member.id)) {
+	if((message.content === "showdetailed") && ((message.member.roles.highest.name) != "@everyone")) {
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage="";		
@@ -263,7 +263,7 @@ bot.on('message', async message => {
 		newMessage+='`';
 		newMessage=BotDate()+vChannel.name+' :joystick: '+memberList.length+' voice users\n'+newMessage;
 		sendLong(message.channel, newMessage, 2000,'`','`');		
-		console.log(BotDate()+"showbloat "+message.author.username+"   "+message.author.id); 	
+		console.log(BotDate()+"showdetailed "+message.author.username+"   "+message.author.id); 	
 	} 
 	if((message.content === "showguild") && (message.guild.ownerID === message.member.id)) {
 		let userNames = getVCnames(process.env.VCHANNEL);		
