@@ -291,7 +291,7 @@ bot.on('message', async message => {
 			
 		}
 		newMessage+='`';		
-		newMessage=BotDate()+Guild.name' :apple: '+Guild.memberCount+' memberCount, '+memberList.length+'members list displayed\n'+newMessage;
+		newMessage=BotDate()+Guild.name+' :apple: '+Guild.memberCount+' memberCount, '+memberList.length+'members list displayed\n'+newMessage;
 		sendLong(message.channel, newMessage, 2000,'`','`');		
 		console.log(BotDate()+"showguild "+message.author.username+"   "+message.author.id); 	
 	} 
