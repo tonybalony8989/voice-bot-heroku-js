@@ -127,7 +127,9 @@ bot.on('message', async message => {
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';			
 		for (i = 0; i < memberList.length; i++) {
 			newMessage+='<@'+memberList[i].id+'>\n';
-			}		
+			}	
+//**************************************		
+		message.channel.send(newMessage);
 		sendLong(message.channel, newMessage, 2000,'','');
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id); 	
@@ -307,7 +309,6 @@ function getVCusers(channelID) {  //gets the names of a voice channel
 	return userNames
 }
 function sendLong(vChan, tMsg, charLimit, prefix, suffix) {  //used to send messages with long contents. 	
-console.log(tMsg);
 	let splitChar="\n";
 	let array=tMsg.split(splitChar);  //split the string on newlines
     let temp='';
@@ -321,5 +322,4 @@ console.log(tMsg);
     }	
 	//send the remnant if any
 	if (temp.length!=0) {vChan.send(temp);}
-	console.log(temp);
 }
