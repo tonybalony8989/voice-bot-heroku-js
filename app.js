@@ -268,7 +268,7 @@ bot.on('message', async message => {
 	} 
 	if((message.content === "showguild") && (message.guild.ownerID === message.member.id)) {
 		let userNames = getVCnames(process.env.VCHANNEL);		
-		let memberList = vChannel.members.map(gMember=>{return gMember});
+		let memberList = Guild.members.map(gMember=>{return gMember});
 		let newMessage="";		
 		newMessage+='`';
 		for (i = 0; i < memberList.length; i++) {   
@@ -280,15 +280,20 @@ bot.on('message', async message => {
 				if (pres.mobile!==null) {temp='[Mobile]';}
 				if (pres.desktop!==null) {temp='[Desktop]';}
 			}				
-			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+'\n';
+			let tempActi=''
+			let acti=memberList[i].presence.activity;
+			if (acti!==null){tempActi='name:'+acti.name+' type:'+acti.type;
+					if (acti.details!==null) {tempActi+=' details:'+acti.details;}
+					if (acti.url!==null) {tempActi+=' url:'+acti.url;}	
+				newMessage+=memberList[i].displayName+' '+temp+' \n';
+				}
+			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+' '+tempActi+'\n';
 			
 		}
 		newMessage+='`';
 		newMessage=BotDate()+vChannel.name+' :joystick: '+memberList.length+' voice users\n'+newMessage;
-		sendLong(message.channel, newMessage, 2000,'`','`');
-		//message.channel.send(newMessage)
-		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
-		console.log(BotDate()+"showstatus "+message.author.username+"   "+message.author.id); 	
+		sendLong(message.channel, newMessage, 2000,'`','`');		
+		console.log(BotDate()+"showguild "+message.author.username+"   "+message.author.id); 	
 	} 
 /*  online - user is online
     idle - user is AFK
