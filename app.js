@@ -306,8 +306,7 @@ function getVCusers(channelID) {  //gets the names of a voice channel
 		let userNames = vChannel.members.map(gMember => {return gMember.user});			
 	return userNames
 }
-function sendLong(vChan, tMsg, charLimit) {  //used to send messages with long contents. 
-	console.log(vChan.name+' ' +tMsg+' ' +charLimit)
+function sendLong(vChan, tMsg, charLimit) {  //used to send messages with long contents. 	
 	let splitChar="\n";
 	let array=tMsg.split(splitChar);  //split the string on newlines
     let temp='';
@@ -318,4 +317,6 @@ function sendLong(vChan, tMsg, charLimit) {  //used to send messages with long c
 			temp=array[i]+splitChar;
 			}
     }	
+	//send the remnant if any
+	if (temp.length!=0) {vChan.send(temp);}
 }
