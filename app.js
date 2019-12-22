@@ -110,7 +110,7 @@ bot.on('message', async message => {
 			})			
 		.catch(console.error); 	
   	 }
-	if((message.content === "snapshot") && ((message.member.roles.highest.name) != "@everyone")) {	
+	if((message.content === "showvoice") && ((message.member.roles.highest.name) != "@everyone")) {	
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +userNames.length+' voice users\n';
 		newMessage+='`'
@@ -118,24 +118,25 @@ bot.on('message', async message => {
 			newMessage+=userNames[i]+'\n';
 			}
 		newMessage+='`'
-		message.channel.send(newMessage)		
-		console.log(BotDate()+"snapshot "+message.author.username+"   "+message.author.id); 	
+		sendLong(message.channel, newMessage, 2000,'`','`');
+		//message.channel.send(newMessage)		
+		console.log(BotDate()+"showvoice "+message.author.username+"   "+message.author.id); 	
 	}
-	if((message.content === "snapshot2") && ((message.member.roles.highest.name) != "@everyone")) {
+	if((message.content === "showvoice2") && ((message.member.roles.highest.name) != "@everyone")) {
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';			
 		for (i = 0; i < memberList.length; i++) {
-			newMessage+='. <@'+memberList[i].id+'>\n';
+			newMessage+=memberList[i].displayName+' '+memberList[i].id+'\n';
 			}					
 		sendLong(message.channel, newMessage, 2000,'','');
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
-		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id); 	
+		console.log(BotDate()+"showvoice2 "+message.author.username+"   "+message.author.id); 	
 	}
-	if((message.content === "snapshot3") && ((message.member.roles.highest.name) != "@everyone")) {			
+	if((message.content === "showvoice3") && ((message.member.roles.highest.name) != "@everyone")) {			
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames}`);
-		console.log(BotDate()+"snapshot3 "+message.author.username+"   "+message.author.id); 	
+		console.log(BotDate()+"showvoice3 "+message.author.username+"   "+message.author.id); 	
 	}
 	if(message.content === "findmods") {		
 		let userNames = vChannel.members.map(gMember => {if (gMember.roles.highest.name=="Moderator3") {return gMember.displayName;}
@@ -179,7 +180,8 @@ bot.on('message', async message => {
 				}
 			}
 		newMessage+='`';
-		message.channel.send(newMessage)	
+		sendLong(message.channel, newMessage, 2000,'`','`');
+		//message.channel.send(newMessage)	
 		console.log(BotDate()+"showactivity "+message.author.username+"   "+message.author.id); 	
 	}  
 	if((message.content === "showafk") && ((message.member.roles.highest.name) != "@everyone")) {
@@ -191,12 +193,12 @@ bot.on('message', async message => {
 		for (i = 0; i < memberList.length; i++) {   
 			let mStat=memberList[i].presence.status;
 			if (mStat!="online") { afk_count++;
-			let temp='-Unknown-';			
+			let temp='[Unknown]';			
 			let pres=memberList[i].presence.clientStatus;			
 			if (pres!==null){
-				if (pres.web!==null) {temp='Web';}
-				if (pres.mobile!==null) {temp='Mobile';}
-				if (pres.desktop!==null) {temp='d';}
+				if (pres.web!==null) {temp='[Web]';}
+				if (pres.mobile!==null) {temp='[Mobile]';}
+				if (pres.desktop!==null) {temp='[Desktop]';}
 			}				
 			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+'\n';
 			}
@@ -204,9 +206,36 @@ bot.on('message', async message => {
 		newMessage+='`';
 		if (afk_count==0) {newMessage='';}
 		newMessage=BotDate()+vChannel.name+' :joystick: '+afk_count+'/'+memberList.length+' voice users are AFK (status not online)\n'+newMessage;
-		message.channel.send(newMessage)
+		sendLong(message.channel, newMessage, 2000,'`','`');
+		//message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"showafk "+message.author.username+"   "+message.author.id); 	
+	} 
+	if((message.content === "showstatus") && ((message.member.roles.highest.name) != "@everyone")) {
+		let userNames = getVCnames(process.env.VCHANNEL);		
+		let memberList = vChannel.members.map(gMember=>{return gMember});
+		let newMessage="";		
+		newMessage+='`';
+		let afk_count=0;
+		for (i = 0; i < memberList.length; i++) {   
+			let mStat=memberList[i].presence.status;			
+			let temp='[Unknown]';			
+			let pres=memberList[i].presence.clientStatus;			
+			if (pres!==null){
+				if (pres.web!==null) {temp='[Web]';}
+				if (pres.mobile!==null) {temp='[Mobile]';}
+				if (pres.desktop!==null) {temp='[Desktop]';}
+			}				
+			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+'\n';
+			
+		}
+		newMessage+='`';
+		if (afk_count==0) {newMessage='';}
+		newMessage=BotDate()+vChannel.name+' :joystick: '+afk_count+'/'+memberList.length+' voice users are AFK (status not online)\n'+newMessage;
+		sendLong(message.channel, newMessage, 2000,'`','`');
+		//message.channel.send(newMessage)
+		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
+		console.log(BotDate()+"showstatus "+message.author.username+"   "+message.author.id); 	
 	} 
 /*  online - user is online
     idle - user is AFK
