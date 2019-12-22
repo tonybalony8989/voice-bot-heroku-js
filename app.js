@@ -179,7 +179,7 @@ bot.on('message', async message => {
 		 let outputs = memberList.map(gMember => {return gMember.user.locale }); //returns blank it seems
 		track(BotDate()+" locales:"+outputs);  
 	 }
-	if((message.content === "activitycheck") && (message.guild.ownerID === message.member.id)) {
+	if((message.content === "activitycheck") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 
 		let userNames = getVCnames(process.env.VCHANNEL);		
