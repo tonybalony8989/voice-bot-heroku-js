@@ -126,10 +126,8 @@ bot.on('message', async message => {
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';			
 		for (i = 0; i < memberList.length; i++) {
-			newMessage+='<@'+memberList[i].id+'>\n';
-			}	
-//**************************************		
-		message.channel.send(newMessage);
+			newMessage+='. <@'+memberList[i].id+'>\n';
+			}					
 		sendLong(message.channel, newMessage, 2000,'','');
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"snapshot2 "+message.author.username+"   "+message.author.id); 	
