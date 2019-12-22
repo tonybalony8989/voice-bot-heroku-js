@@ -102,7 +102,7 @@ bot.on('message', async message => {
 				}, 5000);   
   	 }
 	//message.guild.ownerID === message.member.id
-	if((message.content === "Play1") && ((message.member.roles.highest.name) == "Moderator3")) {
+	if((message.content === "Play1") && (message.guild.ownerID === message.member.id)) {
   	// join the correct voice channel 	  
 	vChannel.join()			
 		.then(connection => { track(BotDate()+":wolf: play "+message.author.username+"   "+message.author.id);
@@ -255,10 +255,9 @@ bot.on('message', async message => {
 			let acti=memberList[i].presence.activity;
 			if (acti!==null){tempActi='name:'+acti.name+' type:'+acti.type;
 					if (acti.details!==null) {tempActi+=' details:'+acti.details;}
-					if (acti.url!==null) {tempActi+=' url:'+acti.url;}	
-				newMessage+=memberList[i].displayName+' '+temp+' \n';
+					if (acti.url!==null) {tempActi+=' url:'+acti.url;}					
 				}
-			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+' '+tempActi+'\n';
+			newMessage+=memberList[i].displayName+' '+memberList[i].id+' '+temp+' '+mStat+' '+tempActi+'\n';
 			
 		}
 		newMessage+='`';
@@ -284,10 +283,9 @@ bot.on('message', async message => {
 			let acti=memberList[i].presence.activity;
 			if (acti!==null){tempActi='name:'+acti.name+' type:'+acti.type;
 					if (acti.details!==null) {tempActi+=' details:'+acti.details;}
-					if (acti.url!==null) {tempActi+=' url:'+acti.url;}	
-				newMessage+=memberList[i].displayName+' '+temp+' \n';
+					if (acti.url!==null) {tempActi+=' url:'+acti.url;}					
 				}
-			newMessage+=memberList[i].displayName+' '+temp+' '+mStat+' '+tempActi+'\n';
+			newMessage+=memberList[i].displayName+' '+memberList[i].id+' '+temp+' '+mStat+' '+tempActi+'\n';
 			
 		}
 		newMessage+='`';
