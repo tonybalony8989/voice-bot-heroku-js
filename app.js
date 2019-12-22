@@ -225,7 +225,7 @@ bot.on('message', async message => {
 			}
 		}
 		newMessage+='`';
-		newMessage=BotDate()+vChannel.name+' :joystick: ' afk_count+'/'+memberList.length+' voice users are AFK (status not online)\n'+newMessage;
+		newMessage=BotDate()+vChannel.name+' :joystick: '+afk_count+'/'+memberList.length+' voice users are AFK (status not online)\n'+newMessage;
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"showafk "+message.author.username+"   "+message.author.id); 	
