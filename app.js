@@ -186,8 +186,8 @@ bot.on('message', async message => {
 		let memberList = vChannel.members.map(gMember=>{return gMember});
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
 		newMessage+='`';
-		for (i = 0; i < memberList.length; i++) {
-			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus.toString()+' '+memberList[i].presence.status+'\n';
+		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
+			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus.values()+' '+memberList[i].presence.status+'\n';
 			}
 		newMessage+='`';
 		message.channel.send(newMessage)
