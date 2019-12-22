@@ -187,11 +187,12 @@ bot.on('message', async message => {
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
 		newMessage+='`';
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
-			//check clientStatus
-			let temp='no';
-			if (memberList[i].presence.clientStatus!==null) {
-				temp=Object.values(memberList[i].presence.clientStatus);
-				}
+			//check clientStatus (web, mobile, desktop. as keys)
+			let temp='unknown';
+			if (memberList[i].presence.clientStatus.web!==null) {temp='web';}
+			if (memberList[i].presence.clientStatus.mobile!==null) {temp='mobile';}
+			if (memberList[i].presence.clientStatus.desktop!==null) {temp='desktop';}
+				
 			newMessage+=memberList[i].displayName+' '+temp+' '+memberList[i].presence.status+'\n';
 			}
 		newMessage+='`';
