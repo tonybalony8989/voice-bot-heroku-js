@@ -187,7 +187,12 @@ bot.on('message', async message => {
 		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
 		newMessage+='`';
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
-			newMessage+=memberList[i].displayName+' '+memberList[i].presence.clientStatus+' '+memberList[i].presence.status+'\n';
+			//check clientStatus
+			let temp='no';
+			if (memberList[i].presence.clientStatus!==null) {
+				temp=memberList[i].presence.clientStatus.toString();
+				}
+			newMessage+=memberList[i].displayName+' '+temp+' '+memberList[i].presence.status+'\n';
 			}
 		newMessage+='`';
 		message.channel.send(newMessage)
