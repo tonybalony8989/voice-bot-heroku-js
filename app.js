@@ -189,9 +189,12 @@ bot.on('message', async message => {
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
 			//check clientStatus (web, mobile, desktop. as keys)
 			let temp='unknown';
-			if (memberList[i].presence.clientStatus.web!==null) {temp='web';}
-			if (memberList[i].presence.clientStatus.mobile!==null) {temp='mobile';}
-			if (memberList[i].presence.clientStatus.desktop!==null) {temp='desktop';}
+			let pres=memberList[i].presence.clientStatus;
+			if (pres!==null){
+				if (pres.web!==null) {temp='web';}
+				if (pres.mobile!==null) {temp='mobile';}
+				if (pres.desktop!==null) {temp='desktop';}
+			}
 				
 			newMessage+=memberList[i].displayName+' '+temp+' '+memberList[i].presence.status+'\n';
 			}
