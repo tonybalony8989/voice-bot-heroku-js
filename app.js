@@ -179,36 +179,33 @@ bot.on('message', async message => {
 		 let outputs = memberList.map(gMember => {return gMember.user.locale }); //returns blank it seems
 		track(BotDate()+" locales:"+outputs);  
 	 }
-	if((message.content === "test99") && (message.guild.ownerID === message.member.id)) {
+	if((message.content === "activitycheck") && (message.guild.ownerID === message.member.id)) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
-		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users\n';		
+		let newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users - activity check\n';		
 		newMessage+='`';		
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
 			//check clientStatus (web, mobile, desktop. as keys)
-			let temp='unknown';
-			let pres=memberList[i].presence.clientStatus;
-			if (pres!==null){
-				if (pres.web!==null) {temp='W';}
-				if (pres.mobile!==null) {temp='M';}
-				if (pres.desktop!==null) {temp='d';}
-			}
-				
+			let temp='.';
+			let acti=memberList[i].presence.activity;
+			if (acti!==null){temp='something';
+				if (acti.details!==null) {temp=acti.details+' x';}				
+			}				
 			newMessage+=memberList[i].displayName+' '+temp+' '+memberList[i].presence.status+'\n';
 			}
 		newMessage+='`';
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
-		console.log(BotDate()+"test99 "+message.author.username+"   "+message.author.id); 	
+		console.log(BotDate()+"activitycheck "+message.author.username+"   "+message.author.id); 	
 	}  
 	if((message.content === "showafk") && ((message.member.roles.highest.name) != "@everyone")) {
 	  //console.log(message.channel.name);
  		let vChannel = bot.channels.get(process.env.VCHANNEL); 
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let memberList = vChannel.members.map(gMember=>{return gMember});
-		let newMessage=""";		
+		let newMessage="";		
 		newMessage+='`';
 		let afk_count=0;
 		for (i = 0; i < memberList.length; i++) {   // check .keys() or .values() of clientStatus
@@ -226,7 +223,7 @@ bot.on('message', async message => {
 			}
 		}
 		newMessage+='`';
-		newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users, '+afk_count+'AFK\n'+newMessage;
+		newMessage=BotDate()+vChannel.name+' :joystick: ' +memberList.length+' voice users, '+afk_count+'AFK - members not status:online\n'+newMessage;
 		message.channel.send(newMessage)
 		//message.channel.send(`${BotDate()}:joystick: ${userNames.length} users. ${userNames.sort()}`);		
 		console.log(BotDate()+"showafk "+message.author.username+"   "+message.author.id); 	
