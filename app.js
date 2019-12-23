@@ -90,15 +90,18 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
     idle - user is AFK
     offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
+		let vChannel = bot.channels.get(process.env.VCHANNEL);
 		let mName=newPresence.member.displayName;
-		if ((oldPresence!=null) && (mName!=null)) {
-			let oldStatus=oldPresence.status;						
-			let newStatus=newPresence.status;			
-			
-			if ((newStatus='idle') && (newStatus!=oldStatus)) {
-					track(mName+' is ***IDLE***');	
+		if (newPresence.member.voice.channel===vChannel) {
+			if ((oldPresence!=null) && (mName!=null)) {
+				let oldStatus=oldPresence.status;						
+				let newStatus=newPresence.status;	
+				if (newStatus!=oldStatus) {
+					if (newStatus='idle') {track(mName+' is ***IDLE***');	}
+					if (newStatus='dnd') {track(mName+' is ***DND*** :no_entry:');	}
 					}			
-							
+								
+			}
 		}
 });
 bot.on('message', async message => {
