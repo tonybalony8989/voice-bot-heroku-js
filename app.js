@@ -82,6 +82,22 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
 			}
   }		
 });
+bot.on('presenceUpdate', (oldPresence, newPresence) =>{
+	//oldPresence is either presence or null, newPresence is guaranteed and all we care about
+		//send  afk notifications when newPresence is not 'online' or perhaps new is 'idle'	
+		//		member and user property of presence may be null
+/*  online - user is online
+    idle - user is AFK
+    offline - user is offline or invisible
+    dnd - user is in Do Not Disturb */
+			let mName=newPresence.member.displayName;
+			if (mName!=null) {
+				let memberStatus=newPresence.status;			
+				if (memberStatus='idle') {
+					track(mName+' is ***IDLE***');
+				}				 
+			}				
+}
 bot.on('message', async message => {
   if(message.author.bot) return;	//only accept commands from within a guild (not DM or groupDM) message.member is null for the former two  
   if(message.member===null) {	//track dms somewhat
@@ -265,46 +281,13 @@ bot.on('message', async message => {
 		sendLong(message.channel, newMessage, 2000,'`','`');		
 		console.log(BotDate()+"showdetailed "+message.author.username+"   "+message.author.id); 	
 	} 
-	if((message.content === "showguild") && (message.guild.ownerID === message.member.id)) {	
-		let memberList = Guild.members.map(gMember=>{return gMember});		
-		let newMessage="";		
-		newMessage+='`';
-		for (i = 0; i < memberList.length; i++) {   
-			let mStat=memberList[i].presence.status;			
-			let temp='[Unknown]';			
-			let pres=memberList[i].presence.clientStatus;			
-			if (pres!==null){
-				if (pres.web!==null) {temp='[Web]';}
-				if (pres.mobile!==null) {temp='[Mobile]';}
-				if (pres.desktop!==null) {temp='[Desktop]';}
-			}				
-			let tempActi=''
-			let acti=memberList[i].presence.activity;
-			if (acti!==null){tempActi='name:'+acti.name+' type:'+acti.type;
-					if (acti.details!==null) {tempActi+=' details:'+acti.details;}
-					if (acti.url!==null) {tempActi+=' url:'+acti.url;}					
-					if (acti.state!==null) {tempActi+=' state:'+acti.state;}					
-				}
-			newMessage+=memberList[i].displayName+' '+memberList[i].id+' '+temp+' '+mStat+' '+tempActi+'\n';
-			
-		}
-		newMessage+='`';		
-		newMessage=BotDate()+Guild.name+' :apple: '+Guild.memberCount+' memberCount, '+memberList.length+'members list displayed\n'+newMessage;
-		sendLong(message.channel, newMessage, 2000,'`','`');		
-		console.log(BotDate()+"showguild "+message.author.username+"   "+message.author.id); 	
-	}
-	if((message.content === "showguild2") && (message.guild.ownerID === message.member.id)) {
+	if((message.content === "showguild") && (message.guild.ownerID === message.member.id)) {
 		let GuildMembers=Guild.members.fetch()
 					.then(gMem=>showGuildMembers(gMem,message.channel,Guild, message.author))
 					.catch(console.error);	
 	}
 /*  online - user is online
     idle - user is AFK
-    dnd - user is in Do Not Disturb */
-
-/*  online - user is online
-    idle - user is AFK
-    offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
 });
 function showGuildMembers(gMembers, tChan, Guild, auth) {
@@ -332,7 +315,7 @@ function showGuildMembers(gMembers, tChan, Guild, auth) {
 		newMessage+='`';		
 		newMessage=BotDate()+Guild.name+' :apple: '+Guild.memberCount+' memberCount, '+memberList.length+'members list displayed\n'+newMessage;
 		sendLong(tChan, newMessage, 2000,'`','`');		
-		console.log(BotDate()+"showguild2 "+auth.username+"  "+auth.id); 	
+		console.log(BotDate()+"showguild "+auth.username+"  "+auth.id); 	
 }
 
 //catch promise errors
