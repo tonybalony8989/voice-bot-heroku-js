@@ -97,7 +97,7 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
 					track(mName+' is ***IDLE***');
 				}				 
 			}				
-}
+});
 bot.on('message', async message => {
   if(message.author.bot) return;	//only accept commands from within a guild (not DM or groupDM) message.member is null for the former two  
   if(message.member===null) {	//track dms somewhat
