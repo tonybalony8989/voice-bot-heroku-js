@@ -268,8 +268,10 @@ bot.on('message', async message => {
 	if((message.content === "showguild") && (message.guild.ownerID === message.member.id)) {
 		let userNames = getVCnames(process.env.VCHANNEL);		
 		let GuildMembers=Guild.members.fetch()
-					.then(console.log(`${GuildMembers.array().length} guildmembers fetch`))
+					.then(console.log('guild members fetch'))
 					.catch(console.error);
+// fix what the hell is going on here ************ find out what .fetch() is returning
+		console.log(`${GuildMembers.array().length} guildmembers fetch`)
 		let memberList = Guild.members.map(gMember=>{return gMember});
 		//let memberList = GuildMembers.map(gMember=>{return gMember});
 		let newMessage="";		
