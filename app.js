@@ -90,6 +90,8 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
     idle - user is AFK
     offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
+	let hChannel = bot.channels.get(process.env.TCHANNEL);
+	let vlChannel = bot.channels.get(process.env.VLCHANNEL);
 		let vChannel = bot.channels.get(process.env.VCHANNEL);
 		let mName=newPresence.member.displayName;
 		if (newPresence.member.voice.channel===vChannel) {
@@ -97,12 +99,16 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
 				let oldStatus=oldPresence.status;						
 				let newStatus=newPresence.status;	
 				if (newStatus!=oldStatus) {
-					if (newStatus=='idle') {track(mName+' is ***IDLE*** :zzz:');	}
-					if (newStatus=='dnd') {track(mName+' is ***DND*** :no_entry:');	}
-					if (newStatus=='online') {track(mName+' is ***BACK*** :computer:');	}
-					if (newStatus=='offline') {track(mName+' is ***OFF*** :stop_sign:');	}
+					let pMsg=null;
+					if (newStatus=='idle') {pMsg=mName+' is ***IDLE*** :zzz:';	}
+					if (newStatus=='dnd') {pMsg=mName+' is ***DND*** :no_entry:';	}
+					if (newStatus=='online') {pMsg=mName+' is ***BACK*** :computer:';	}
+					if (newStatus=='offline') {pMsg=mName+' is ***OFF*** :stop_sign:';	}
+					if (pMsg!=null) {
+						tChanSend(vlChannel,BotDate()+pMsg);
+						tChanSend(hChannel,BotDate()+pMsg);						
+						}
 					}			
-								
 			}
 		}
 });
