@@ -100,6 +100,7 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
 					if (newStatus=='idle') {track(mName+' is ***IDLE*** :zzz:');	}
 					if (newStatus=='dnd') {track(mName+' is ***DND*** :no_entry:');	}
 					if (newStatus=='online') {track(mName+' is ***BACK*** :computer:');	}
+					if (newStatus=='offline') {track(mName+' is ***OFF*** :stop_sign:');	}
 					}			
 								
 			}
