@@ -90,13 +90,16 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
     idle - user is AFK
     offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
-			let mName=newPresence.member.displayName;
-			if (mName!=null) {
-				let memberStatus=newPresence.status;			
-				if (memberStatus='idle') {
-					track(mName+' is ***IDLE***');
-				}				 
-			}				
+		let mName=newPresence.member.displayName;
+		if ((oldPresence!=null) && (mName!=null)) {
+			let oldStatus=oldPresence.status;						
+			let newStatus=newPresence.status;			
+			
+			if ((newStatus='idle') && (newStatus!=oldStatus)) {
+					track(mName+' is ***IDLE***');	
+					}			
+							
+		}
 });
 bot.on('message', async message => {
   if(message.author.bot) return;	//only accept commands from within a guild (not DM or groupDM) message.member is null for the former two  
