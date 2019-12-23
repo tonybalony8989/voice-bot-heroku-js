@@ -271,7 +271,7 @@ bot.on('message', async message => {
 					.then(console.log('guild members fetch'))
 					.catch(console.error);
 // fix what the hell is going on here ************ find out what .fetch() is returning
-		console.log(`${GuildMembers.array().length} guildmembers fetch`)
+		console.log(`${GuildMembers} guildmembers fetch`)
 		let memberList = Guild.members.map(gMember=>{return gMember});
 		//let memberList = GuildMembers.map(gMember=>{return gMember});
 		let newMessage="";		
