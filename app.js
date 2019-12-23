@@ -265,14 +265,8 @@ bot.on('message', async message => {
 		sendLong(message.channel, newMessage, 2000,'`','`');		
 		console.log(BotDate()+"showdetailed "+message.author.username+"   "+message.author.id); 	
 	} 
-	if((message.content === "showguild") && (message.guild.ownerID === message.member.id)) {
-		let userNames = getVCnames(process.env.VCHANNEL);		
-		let GuildMembers=Guild.members.fetch()
-					.then(console.log)
-					.catch(console.error);
-// fix what the hell is going on here ************ find out what .fetch() is returning
-		let memberList = Guild.members.map(gMember=>{return gMember});
-		//let memberList = GuildMembers.map(gMember=>{return gMember});
+	if((message.content === "showguild") && (message.guild.ownerID === message.member.id)) {	
+		let memberList = Guild.members.map(gMember=>{return gMember});		
 		let newMessage="";		
 		newMessage+='`';
 		for (i = 0; i < memberList.length; i++) {   
@@ -298,7 +292,12 @@ bot.on('message', async message => {
 		newMessage=BotDate()+Guild.name+' :apple: '+Guild.memberCount+' memberCount, '+memberList.length+'members list displayed\n'+newMessage;
 		sendLong(message.channel, newMessage, 2000,'`','`');		
 		console.log(BotDate()+"showguild "+message.author.username+"   "+message.author.id); 	
-	} 
+	}
+	if((message.content === "showguild2") && (message.guild.ownerID === message.member.id)) {
+		let GuildMembers=Guild.members.fetch()
+					.then(gMem=>showGuildMembers(gMem,message.channel,Guild, message.author))
+					.catch(console.error);	
+	}
 /*  online - user is online
     idle - user is AFK
     dnd - user is in Do Not Disturb */
@@ -308,6 +307,34 @@ bot.on('message', async message => {
     offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
 });
+function showGuildMembers(gMembers, tChan, Guild, auth) {
+		let memberList = gMembers.map(gMember=>{return gMember})
+		let newMessage="";		
+		newMessage+='`';
+		for (i = 0; i < memberList.length; i++) {   
+			let mStat=memberList[i].presence.status;			
+			let temp='[Unknown]';			
+			let pres=memberList[i].presence.clientStatus;			
+			if (pres!==null){
+				if (pres.web!==null) {temp='[Web]';}
+				if (pres.mobile!==null) {temp='[Mobile]';}
+				if (pres.desktop!==null) {temp='[Desktop]';}
+			}				
+			let tempActi=''
+			let acti=memberList[i].presence.activity;
+			if (acti!==null){tempActi='name:'+acti.name+' type:'+acti.type;
+					if (acti.details!==null) {tempActi+=' details:'+acti.details;}
+					if (acti.url!==null) {tempActi+=' url:'+acti.url;}					
+					if (acti.state!==null) {tempActi+=' state:'+acti.state;}					
+				}
+			newMessage+=memberList[i].displayName+' '+memberList[i].id+' '+temp+' '+mStat+' '+tempActi+'\n';			
+		}
+		newMessage+='`';		
+		newMessage=BotDate()+Guild.name+' :apple: '+Guild.memberCount+' memberCount, '+memberList.length+'members list displayed\n'+newMessage;
+		sendLong(tChan, newMessage, 2000,'`','`');		
+		console.log(BotDate()+"showguild2 "+auth.username+"  "+auth.id); 	
+}
+
 //catch promise errors
 process.on('unhandledRejection', error => console.error('Uh Oh, Uncaught Promise Rejection', error));
 
