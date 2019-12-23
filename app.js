@@ -97,8 +97,9 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
 				let oldStatus=oldPresence.status;						
 				let newStatus=newPresence.status;	
 				if (newStatus!=oldStatus) {
-					if (newStatus=='idle') {track(mName+' is ***IDLE***');	}
+					if (newStatus=='idle') {track(mName+' is ***IDLE*** :zzz:');	}
 					if (newStatus=='dnd') {track(mName+' is ***DND*** :no_entry:');	}
+					if (newStatus=='online') {track(mName+' is ***BACK*** :computer:');	}
 					}			
 								
 			}
