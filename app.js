@@ -364,7 +364,7 @@ function intervalFunc() {
 	if (repairTrack>=10) {
 		let userNames = getVCnames(process.env.VCHANNEL);
 		console.log(BotDate()+'10x repairs, last chat was '+BotDate(lastChat));
-		track(BotDate()+":clock3: 10x interval repairs - chats:"+chats+' last chat: '+BotDate(lastChat)+' current users:'+userNames);
+		//track(BotDate()+":clock3: 10x interval repairs - chats:"+chats+' last chat: '+BotDate(lastChat)+' current users:'+userNames);
 		repairTrack=0;
 	}
 } 
