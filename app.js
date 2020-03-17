@@ -12,9 +12,8 @@ var lastRepair = new Date('2010/01/05 10:11:12');
 var lastChat = new Date('1999/01/05 10:11:12');
 
 bot.on('ready', async () => {      				// join the correct voice channel 
-  track(BotDate()+"ready start");
-	
-   let vChannel = bot.channels.get(process.env.VCHANNEL);  
+  // let vChannel = bot.channels.get(process.env.VCHANNEL);  
+   let vChannel = bot.channels.fetch(process.env.VCHANNEL);  
    await vChannel.join()			 	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    }) 
