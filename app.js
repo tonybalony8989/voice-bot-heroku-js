@@ -12,8 +12,9 @@ var lastRepair = new Date('2010/01/05 10:11:12');
 var lastChat = new Date('1999/01/05 10:11:12');
 
 bot.on('ready', async () => {      				// join the correct voice channel 
-  //let vChannel = bot.channels.fetch(process.env.VCHANNEL);  all '.get' instances replaced with .fetch
-  let vChannel = bot.channels.fetch(process.env.VCHANNEL);  
+  //let vChannel = bot.channels.get(process.env.VCHANNEL);  all '.get' instances replaced with .cache.get / .fetch
+  let vChannel = bot.channels.cache.get(process.env.VCHANNEL);  
+  track(vChannel.id);
    await vChannel.join()			 	
 			.then(connection => { BotConn(connection, ":boom: new voice connection", true)
 			    }) 
@@ -23,7 +24,7 @@ bot.on('ready', async () => {      				// join the correct voice channel
 bot.on('guildMemberSpeaking', (member, speaking) => { 
 	//console.log(`${member.displayName} ${speaking.has(1)}`);
 	if (speaking.has(1)) {
-	let hChannel = bot.channels.fetch(process.env.TCHANNEL);	
+	let hChannel = bot.channels.cache.get(process.env.TCHANNEL);	
 	let special="";
 	if (speaking.bitfield==5) { special=" :loudspeaker:"; }
 	tChanSend(hChannel,BotDate()+member.displayName+special+' 				`'+member.user.id+'` ')
@@ -38,10 +39,10 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 });
 
 bot.on('voiceStateUpdate', (oldState, newState) =>{
-  let vlChannel = bot.channels.fetch(process.env.VLCHANNEL);
-  let ttsChannel = bot.channels.fetch(process.env.TTSCHANNEL);
-  let trackChannel = bot.channels.fetch(process.env.TRACKCHANNEL);
-  let hChannel = bot.channels.fetch(process.env.TCHANNEL);	
+  let vlChannel = bot.channels.cache.get(process.env.VLCHANNEL);
+  let ttsChannel = bot.channels.cache.get(process.env.TTSCHANNEL);
+  let trackChannel = bot.channels.cache.get(process.env.TRACKCHANNEL);
+  let hChannel = bot.channels.cache.get(process.env.TCHANNEL);	
   let newName=null; let newID=null; let newUserChannel=null;
   let oldName=null; let oldID=null; let oldUserChannel=null;
   let botNote="";
@@ -91,9 +92,9 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
     idle - user is AFK
     offline - user is offline or invisible
     dnd - user is in Do Not Disturb */
-	let hChannel = bot.channels.fetch(process.env.TCHANNEL);
-	let vlChannel = bot.channels.fetch(process.env.VLCHANNEL);
-		let vChannel = bot.channels.fetch(process.env.VCHANNEL);
+	let hChannel = bot.channels.cache.get(process.env.TCHANNEL);
+	let vlChannel = bot.channels.cache.get(process.env.VLCHANNEL);
+		let vChannel = bot.channels.cache.get(process.env.VCHANNEL);
 		let mName=newPresence.member.displayName;
 		if (newPresence.member.voice.channel===vChannel) {
 			if ((oldPresence!=null) && (mName!=null)) {
@@ -119,7 +120,7 @@ bot.on('message', async message => {
 						console.log(BotDate()+"DM from "+message.author.username+"   "+message.author.id);  		  
 						track(BotDate()+":interrobang: DM from "+message.author.username+"   "+message.author.id);
 						return;}
-	let vChannel = bot.channels.fetch(process.env.VCHANNEL); //used throughout this event
+	let vChannel = bot.channels.cache.get(process.env.VCHANNEL); //used throughout this event
 	let Guild = vChannel.guild; //common object 
 	if((message.content === "z join fleet voice please") && ((message.member.roles.highest.name) != "@everyone") ) {
   	// join the correct voice channel 	  	
@@ -341,7 +342,7 @@ bot.login(process.env.TOKEN);
  setInterval(intervalFunc,300000);
 
 function intervalFunc() {
-	let vChannel = bot.channels.fetch(process.env.VCHANNEL); 
+	let vChannel = bot.channels.cache.get(process.env.VCHANNEL); 
 	let userNames = getVCnames(process.env.VCHANNEL);
 	let userCount = userNames.length; //this is 1 when empty (bot is counted).
 	if ((lastChats >= chats) && (userCount>=3)) { //no need to do anything if the server is empty
@@ -398,14 +399,14 @@ function BotConn(bConn, msgString, playSound) {
 }
 function track(testMsg) {
 	//send a message into the track channel
-	let trackChannel = bot.channels.fetch(process.env.TRACKCHANNEL);  //don't use tChanSend here
+	let trackChannel = bot.channels.cache.get(process.env.TRACKCHANNEL);  //don't use tChanSend here
 		trackChannel.send(testMsg);
 }
 function tChanSend(tChan, tMsg) { //try to catch some errors that intermitently show up as 'HTTPError'
 	tChan.send(tMsg).catch((e) => track(BotDate()+'a send error occurred')).catch(console.log);	
 }
 function getVCnames(channelID) {  //gets the names of a voice channel
-	 	let vChannel = bot.channels.fetch(channelID); 			
+	 	let vChannel = bot.channels.cache.get(channelID); 			
 		let userNames = vChannel.members.map(gMember => {let base=gMember.displayName;
 					 let prefix="";
 					 let suffix="";
@@ -418,7 +419,7 @@ function getVCnames(channelID) {  //gets the names of a voice channel
 	return userNames
 }
 function getVCusers(channelID) {  //gets the names of a voice channel
-	 	let vChannel = bot.channels.fetch(channelID); 			
+	 	let vChannel = bot.channels.cache.get(channelID); 			
 		let userNames = vChannel.members.map(gMember => {return gMember.user});			
 	return userNames
 }
