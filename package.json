@@ -12,7 +12,7 @@
     "start": "node app.js"
   },
     "dependencies": {
-    "discord.js": "tonybalony8989/discord.js", 
+    "discord.js": "discordjs/discord.js#master", 
     "opusscript": "0.0.7",     
     "ffmpeg": ">=0.0.4"
   }
