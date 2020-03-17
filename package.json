@@ -1,6 +1,6 @@
 {
   "name": "voicehistorybot",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "A Discord bot",
   "main": "app.js",
   "engines": {
@@ -12,7 +12,7 @@
     "start": "node app.js"
   },
     "dependencies": {
-    "discord.js": "discordjs/discord.js#master", 
+    "discord.js": "https://github.com/discordjs/discord.js.git#4585d965b430ed0661ac8d3e32b738f27b4c9d42", 
     "opusscript": "0.0.7",     
     "ffmpeg": ">=0.0.4"
   }
