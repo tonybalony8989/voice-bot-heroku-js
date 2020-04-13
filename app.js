@@ -27,7 +27,7 @@ bot.on('guildMemberSpeaking', (member, speaking) => {
 	let hChannel = bot.channels.cache.get(process.env.TCHANNEL);	
 	let special="";
 	if (speaking.bitfield==5) { special=" :loudspeaker:"; }
-	tChanSend(hChannel,BotDate()+member.displayName+special+' 				`'+member.user.id+'` ')
+	tChanSend(hChannel,BotDate()+member.displayName+special+' 				`'+member.user.id+'` ', false)
 		//.catch((e) => channel.send('an error occurred')).catch(console.log);
 	//console.log(speaking.bitfield);  //this is 1 for regular voice, and 5 for priority voice
 	if (chats==0) {  //first chat since the bot has started
@@ -60,25 +60,25 @@ bot.on('voiceStateUpdate', (oldState, newState) =>{
   }
 
   if (oldState.channel === null) {  	//user joined channel  		
-	tChanSend(vlChannel,BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
-	tChanSend(hChannel,BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');	  
-  	tChanSend(ttsChannel,newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
+	tChanSend(vlChannel,BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:', false);
+	tChanSend(hChannel,BotDate()+newName+botNote+'`'+newID+'` ***JOINED*** _'+newUserChannel+'_ :white_check_mark:', false);	  
+  	tChanSend(ttsChannel,newName+' JOINED '+newUserChannel.replace(/\s/g, '')+'', true);
 		 	if (newState.member.roles.highest.name == "@everyone") {
-				tChanSend(trackChannel,BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:');
+				tChanSend(trackChannel,BotDate()+newName+'<@'+newID+'> ***JOINED*** _'+newUserChannel+'_ :white_check_mark:', false);
 		 	}		
 			if (newState.member.user.bot) { track(BotDate()+':robot: '+newName+' is a bot')}
   }
   else {		
 		if (newState.channel === null) {	//user left channel
-			tChanSend(vlChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
-			tChanSend(hChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:');
-			tChanSend(ttsChannel,oldName+' LEFT '+oldUserChannel.replace(/\s/g, '')+'', { tts: true});
+			tChanSend(vlChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:', false);
+			tChanSend(hChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***LEFT*** _'+oldUserChannel+'_ :stop_sign:', false);
+			tChanSend(ttsChannel,oldName+' LEFT '+oldUserChannel.replace(/\s/g, '')+'', true);
 			}
 		else {	//user switched channel
 			if (newUserChannel != oldUserChannel) {
-				tChanSend(vlChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
-				tChanSend(hChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_');
-				tChanSend(ttsChannel,oldName+' SWITCHED '+oldUserChannel.replace(/\s/g, '')+' to '+newUserChannel.replace(/\s/g, '')+'', { tts: true});
+				tChanSend(vlChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_', false);
+				tChanSend(hChannel,BotDate()+oldName+botNote+'`'+oldID+'` ***SWITCHED*** _'+oldUserChannel+'_ to _'+newUserChannel+'_', false);
+				tChanSend(ttsChannel,oldName+' SWITCHED '+oldUserChannel.replace(/\s/g, '')+' to '+newUserChannel.replace(/\s/g, '')+'', true);
 				//str = str.replace(/\s/g, '');
 				}
 			}
@@ -107,8 +107,8 @@ bot.on('presenceUpdate', (oldPresence, newPresence) =>{
 					if (newStatus=='online') {pMsg=mName+' is ***BACK*** :computer:';	}
 					if (newStatus=='offline') {pMsg=mName+' is ***OFF*** :stop_sign:';	}
 					if (pMsg!=null) {
-						tChanSend(vlChannel,BotDate()+pMsg);
-						tChanSend(hChannel,BotDate()+pMsg);						
+						tChanSend(vlChannel,BotDate()+pMsg, false);
+						tChanSend(hChannel,BotDate()+pMsg, false);						
 						}
 					}			
 			}
@@ -400,10 +400,17 @@ function BotConn(bConn, msgString, playSound) {
 function track(testMsg) {
 	//send a message into the track channel
 	let trackChannel = bot.channels.cache.get(process.env.TRACKCHANNEL);  //don't use tChanSend here
-		trackChannel.send(testMsg);
+		trackChannel.send(testMsg, false);
 }
-function tChanSend(tChan, tMsg) { //try to catch some errors that intermitently show up as 'HTTPError'
-	tChan.send(tMsg).catch((e) => track(BotDate()+'a send error occurred')).catch(console.log);	
+function tChanSend(tChan, tMsg, TTSstate) { //try to catch some errors that intermitently show up as 'HTTPError'
+	if TTSstate {
+		tMsg+=", { tts: true}";
+		tChan.send(tMsg).catch((e) => track(BotDate()+'a send error occurred')).catch(console.log);	
+	}
+	else
+	{	
+	tChan.send(tMsg).catch((e) => track(BotDate()+'a send error occurred')).catch(console.log);
+		}
 }
 function getVCnames(channelID) {  //gets the names of a voice channel
 	 	let vChannel = bot.channels.cache.get(channelID); 			
