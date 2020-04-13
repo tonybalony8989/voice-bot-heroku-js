@@ -404,7 +404,7 @@ function track(testMsg) {
 }
 function tChanSend(tChan, tMsg, TTSstate) { //try to catch some errors that intermitently show up as 'HTTPError'
 	if (TTSstate==true) {
-		tMsg+=", { tts: true}";
+		tMsg+=, { tts: true};
 		tChan.send(tMsg).catch((e) => track(BotDate()+'a send error occurred')).catch(console.log);	
 	}
 	else
